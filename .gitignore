@@ -1,0 +1,25 @@
+# Data files (should not be committed)
+data/*.json
+!data/.gitkeep
+
+# Composer
+/vendor/
+composer.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+error_log
+
+# Environment
+.env
+.env.local
