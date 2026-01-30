@@ -1,0 +1,3402 @@
+{
+    "1763163897014920": {
+        "matchId": "1763163897014920",
+        "map": "dust2",
+        "score": {
+            "team1": 13,
+            "team2": 8
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 26,
+                        "deaths": 13,
+                        "assists": 3,
+                        "damage": 2440,
+                        "adr": 116,
+                        "adrDiff": 41,
+                        "hltvRating": 1.76,
+                        "kast": 85,
+                        "openKills": 5,
+                        "tradeKills": 2,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 24,
+                        "deaths": 12,
+                        "assists": 7,
+                        "damage": 2501,
+                        "adr": 119,
+                        "adrDiff": 51,
+                        "hltvRating": 1.7,
+                        "kast": 85,
+                        "openKills": 2,
+                        "tradeKills": 5,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 8,
+                        "assists": 3,
+                        "damage": 1593,
+                        "adr": 76,
+                        "adrDiff": 23,
+                        "hltvRating": 1.4,
+                        "kast": 80,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "379527105",
+                        "name": "full focus",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/45caa33a8ee8214e4a4923397a940a7f95ac4664_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 14,
+                        "assists": 6,
+                        "damage": 1320,
+                        "adr": 63,
+                        "adrDiff": -13,
+                        "hltvRating": 0.86,
+                        "kast": 80,
+                        "openKills": 0,
+                        "tradeKills": 0,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 13,
+                        "assists": 7,
+                        "damage": 1068,
+                        "adr": 51,
+                        "adrDiff": -20,
+                        "hltvRating": 0.72,
+                        "kast": 66,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 25,
+                        "deaths": 13,
+                        "assists": 1,
+                        "damage": 2177,
+                        "adr": 104,
+                        "adrDiff": 34,
+                        "hltvRating": 1.68,
+                        "kast": 71,
+                        "openKills": 4,
+                        "tradeKills": 6,
+                        "playerId": "192104407",
+                        "name": "Amelot",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 14,
+                        "assists": 3,
+                        "damage": 1905,
+                        "adr": 91,
+                        "adrDiff": 14,
+                        "hltvRating": 1.34,
+                        "kast": 76,
+                        "openKills": 5,
+                        "tradeKills": 2,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 19,
+                        "assists": 6,
+                        "damage": 1591,
+                        "adr": 76,
+                        "adrDiff": -18,
+                        "hltvRating": 0.73,
+                        "kast": 57,
+                        "openKills": 3,
+                        "tradeKills": 2,
+                        "playerId": "449983580",
+                        "name": "Lur1y",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/bca94b85d85dd308ab66e8fc53dbd27b0555c18f_medium.jpg"
+                    },
+                    {
+                        "kills": 6,
+                        "deaths": 19,
+                        "assists": 5,
+                        "damage": 798,
+                        "adr": 38,
+                        "adrDiff": -57,
+                        "hltvRating": 0.35,
+                        "kast": 47,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "1138366701",
+                        "name": "Donald Truh",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/dc5e7ec5822abe4f9c5451ca3ddaaacf75146dfe_medium.jpg"
+                    },
+                    {
+                        "kills": 2,
+                        "deaths": 20,
+                        "assists": 3,
+                        "damage": 597,
+                        "adr": 28,
+                        "adrDiff": -67,
+                        "hltvRating": 0.11,
+                        "kast": 38,
+                        "openKills": 0,
+                        "tradeKills": 1,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "823492725824350": {
+        "matchId": "823492725824350",
+        "map": "mirage",
+        "score": {
+            "team1": 10,
+            "team2": 13
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 23,
+                        "deaths": 15,
+                        "assists": 2,
+                        "damage": 1901,
+                        "adr": 83,
+                        "adrDiff": -2,
+                        "hltvRating": 1.32,
+                        "kast": 78,
+                        "openKills": 2,
+                        "tradeKills": 4,
+                        "playerId": "192104407",
+                        "name": "Amelot",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 16,
+                        "assists": 11,
+                        "damage": 2004,
+                        "adr": 87,
+                        "adrDiff": 6,
+                        "hltvRating": 1.2,
+                        "kast": 95,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 2012,
+                        "adr": 87,
+                        "adrDiff": 6,
+                        "hltvRating": 1.18,
+                        "kast": 69,
+                        "openKills": 5,
+                        "tradeKills": 4,
+                        "playerId": "449983580",
+                        "name": "Lur1y",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/bca94b85d85dd308ab66e8fc53dbd27b0555c18f_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 16,
+                        "assists": 5,
+                        "damage": 2056,
+                        "adr": 89,
+                        "adrDiff": 8,
+                        "hltvRating": 1.12,
+                        "kast": 82,
+                        "openKills": 1,
+                        "tradeKills": 5,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 17,
+                        "assists": 8,
+                        "damage": 1561,
+                        "adr": 68,
+                        "adrDiff": -10,
+                        "hltvRating": 0.83,
+                        "kast": 73,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "1138366701",
+                        "name": "Donald Truh",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/dc5e7ec5822abe4f9c5451ca3ddaaacf75146dfe_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 21,
+                        "deaths": 14,
+                        "assists": 2,
+                        "damage": 2020,
+                        "adr": 88,
+                        "adrDiff": 10,
+                        "hltvRating": 1.31,
+                        "kast": 78,
+                        "openKills": 3,
+                        "tradeKills": 1,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 19,
+                        "deaths": 21,
+                        "assists": 8,
+                        "damage": 2239,
+                        "adr": 97,
+                        "adrDiff": 5,
+                        "hltvRating": 1.17,
+                        "kast": 73,
+                        "openKills": 4,
+                        "tradeKills": 2,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 17,
+                        "assists": 5,
+                        "damage": 2077,
+                        "adr": 90,
+                        "adrDiff": 3,
+                        "hltvRating": 1.16,
+                        "kast": 78,
+                        "openKills": 4,
+                        "tradeKills": 4,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 17,
+                        "assists": 7,
+                        "damage": 1330,
+                        "adr": 58,
+                        "adrDiff": -23,
+                        "hltvRating": 0.84,
+                        "kast": 73,
+                        "openKills": 2,
+                        "tradeKills": 1,
+                        "playerId": "379527105",
+                        "name": "full focus",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/45caa33a8ee8214e4a4923397a940a7f95ac4664_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 15,
+                        "assists": 3,
+                        "damage": 1568,
+                        "adr": 68,
+                        "adrDiff": -6,
+                        "hltvRating": 0.77,
+                        "kast": 52,
+                        "openKills": 0,
+                        "tradeKills": 1,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "267924023247470": {
+        "matchId": "267924023247470",
+        "map": "inferno",
+        "score": {
+            "team1": 13,
+            "team2": 8
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 22,
+                        "deaths": 15,
+                        "assists": 10,
+                        "damage": 2592,
+                        "adr": 123,
+                        "adrDiff": 42,
+                        "hltvRating": 1.64,
+                        "kast": 90,
+                        "openKills": 5,
+                        "tradeKills": 7,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 16,
+                        "assists": 10,
+                        "damage": 2114,
+                        "adr": 101,
+                        "adrDiff": 12,
+                        "hltvRating": 1.26,
+                        "kast": 90,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "192104407",
+                        "name": "Amelot",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 15,
+                        "deaths": 14,
+                        "assists": 4,
+                        "damage": 1581,
+                        "adr": 75,
+                        "adrDiff": -6,
+                        "hltvRating": 0.99,
+                        "kast": 71,
+                        "openKills": 0,
+                        "tradeKills": 4,
+                        "playerId": "1138366701",
+                        "name": "Donald Truh",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/dc5e7ec5822abe4f9c5451ca3ddaaacf75146dfe_medium.jpg"
+                    },
+                    {
+                        "kills": 14,
+                        "deaths": 15,
+                        "assists": 3,
+                        "damage": 1403,
+                        "adr": 67,
+                        "adrDiff": -12,
+                        "hltvRating": 0.91,
+                        "kast": 61,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 18,
+                        "assists": 6,
+                        "damage": 1095,
+                        "adr": 52,
+                        "adrDiff": -40,
+                        "hltvRating": 0.78,
+                        "kast": 71,
+                        "openKills": 2,
+                        "tradeKills": 4,
+                        "playerId": "449983580",
+                        "name": "Lur1y",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/bca94b85d85dd308ab66e8fc53dbd27b0555c18f_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 19,
+                        "deaths": 14,
+                        "assists": 7,
+                        "damage": 2029,
+                        "adr": 97,
+                        "adrDiff": 17,
+                        "hltvRating": 1.34,
+                        "kast": 76,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "379527105",
+                        "name": "full focus",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/45caa33a8ee8214e4a4923397a940a7f95ac4664_medium.jpg"
+                    },
+                    {
+                        "kills": 19,
+                        "deaths": 14,
+                        "assists": 6,
+                        "damage": 1895,
+                        "adr": 90,
+                        "adrDiff": 10,
+                        "hltvRating": 1.3,
+                        "kast": 71,
+                        "openKills": 3,
+                        "tradeKills": 6,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 20,
+                        "assists": 12,
+                        "damage": 1953,
+                        "adr": 93,
+                        "adrDiff": -1,
+                        "hltvRating": 1.13,
+                        "kast": 85,
+                        "openKills": 3,
+                        "tradeKills": 1,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 16,
+                        "assists": 11,
+                        "damage": 1744,
+                        "adr": 83,
+                        "adrDiff": 0,
+                        "hltvRating": 0.99,
+                        "kast": 80,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 16,
+                        "assists": 7,
+                        "damage": 1055,
+                        "adr": 50,
+                        "adrDiff": -32,
+                        "hltvRating": 0.73,
+                        "kast": 61,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "95601525132540": {
+        "matchId": "95601525132540",
+        "map": "dust2",
+        "score": {
+            "team1": 16,
+            "team2": 13
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 31,
+                        "deaths": 15,
+                        "assists": 9,
+                        "damage": 3357,
+                        "adr": 116,
+                        "adrDiff": 53,
+                        "hltvRating": 1.82,
+                        "kast": 72,
+                        "openKills": 9,
+                        "tradeKills": 0,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 32,
+                        "deaths": 22,
+                        "assists": 5,
+                        "damage": 3202,
+                        "adr": 110,
+                        "adrDiff": 24,
+                        "hltvRating": 1.51,
+                        "kast": 72,
+                        "openKills": 3,
+                        "tradeKills": 3,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 16,
+                        "assists": 8,
+                        "damage": 1498,
+                        "adr": 52,
+                        "adrDiff": -15,
+                        "hltvRating": 0.92,
+                        "kast": 75,
+                        "openKills": 1,
+                        "tradeKills": 3,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 14,
+                        "deaths": 19,
+                        "assists": 8,
+                        "damage": 1714,
+                        "adr": 59,
+                        "adrDiff": -18,
+                        "hltvRating": 0.86,
+                        "kast": 75,
+                        "openKills": 2,
+                        "tradeKills": 5,
+                        "playerId": "248878876",
+                        "name": "proFeed",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/850e0ad405588add9714a17546713d6af045b08f_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 21,
+                        "assists": 7,
+                        "damage": 1642,
+                        "adr": 57,
+                        "adrDiff": -21,
+                        "hltvRating": 0.68,
+                        "kast": 65,
+                        "openKills": 0,
+                        "tradeKills": 1,
+                        "playerId": "1138366701",
+                        "name": "Donald Truh",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/dc5e7ec5822abe4f9c5451ca3ddaaacf75146dfe_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 27,
+                        "deaths": 21,
+                        "assists": 5,
+                        "damage": 2726,
+                        "adr": 94,
+                        "adrDiff": 15,
+                        "hltvRating": 1.31,
+                        "kast": 58,
+                        "openKills": 6,
+                        "tradeKills": 4,
+                        "playerId": "192104407",
+                        "name": "Amelot",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 24,
+                        "deaths": 22,
+                        "assists": 4,
+                        "damage": 2491,
+                        "adr": 86,
+                        "adrDiff": 7,
+                        "hltvRating": 1.15,
+                        "kast": 65,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "919833079",
+                        "name": "wasted",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/173f2bb4245ea8e3085f41d580b63348a7dfa832_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 20,
+                        "assists": 5,
+                        "damage": 2065,
+                        "adr": 71,
+                        "adrDiff": -8,
+                        "hltvRating": 0.9,
+                        "kast": 62,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 22,
+                        "assists": 6,
+                        "damage": 1998,
+                        "adr": 69,
+                        "adrDiff": -11,
+                        "hltvRating": 0.88,
+                        "kast": 65,
+                        "openKills": 3,
+                        "tradeKills": 2,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 21,
+                        "assists": 6,
+                        "damage": 1197,
+                        "adr": 41,
+                        "adrDiff": -38,
+                        "hltvRating": 0.54,
+                        "kast": 62,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1789905266204220": {
+        "matchId": "1789905266204220",
+        "map": "inferno",
+        "score": {
+            "team1": 13,
+            "team2": 7
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 19,
+                        "deaths": 17,
+                        "assists": 8,
+                        "damage": 2460,
+                        "adr": 123,
+                        "adrDiff": 31,
+                        "hltvRating": 1.42,
+                        "kast": 85,
+                        "openKills": 4,
+                        "tradeKills": 3,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 14,
+                        "deaths": 15,
+                        "assists": 2,
+                        "damage": 1233,
+                        "adr": 62,
+                        "adrDiff": -23,
+                        "hltvRating": 0.99,
+                        "kast": 69,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "192104407",
+                        "name": "Amelot",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 17,
+                        "assists": 12,
+                        "damage": 1493,
+                        "adr": 75,
+                        "adrDiff": -10,
+                        "hltvRating": 0.9,
+                        "kast": 69,
+                        "openKills": 3,
+                        "tradeKills": 2,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 16,
+                        "assists": 1,
+                        "damage": 1034,
+                        "adr": 52,
+                        "adrDiff": -38,
+                        "hltvRating": 0.7,
+                        "kast": 44,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "919833079",
+                        "name": "wasted",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/173f2bb4245ea8e3085f41d580b63348a7dfa832_medium.jpg"
+                    },
+                    {
+                        "kills": 5,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 801,
+                        "adr": 40,
+                        "adrDiff": -49,
+                        "hltvRating": 0.34,
+                        "kast": 50,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 29,
+                        "deaths": 12,
+                        "assists": 8,
+                        "damage": 3102,
+                        "adr": 155,
+                        "adrDiff": 86,
+                        "hltvRating": 2.13,
+                        "kast": 85,
+                        "openKills": 4,
+                        "tradeKills": 1,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 18,
+                        "deaths": 15,
+                        "assists": 6,
+                        "damage": 1895,
+                        "adr": 95,
+                        "adrDiff": 23,
+                        "hltvRating": 1.44,
+                        "kast": 80,
+                        "openKills": 5,
+                        "tradeKills": 1,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 11,
+                        "assists": 3,
+                        "damage": 1495,
+                        "adr": 75,
+                        "adrDiff": 6,
+                        "hltvRating": 1.02,
+                        "kast": 64,
+                        "openKills": 1,
+                        "tradeKills": 3,
+                        "playerId": "1138366701",
+                        "name": "Donald Truh",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/dc5e7ec5822abe4f9c5451ca3ddaaacf75146dfe_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 12,
+                        "assists": 2,
+                        "damage": 1234,
+                        "adr": 62,
+                        "adrDiff": -21,
+                        "hltvRating": 0.9,
+                        "kast": 75,
+                        "openKills": 0,
+                        "tradeKills": 4,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 11,
+                        "assists": 5,
+                        "damage": 1037,
+                        "adr": 52,
+                        "adrDiff": -9,
+                        "hltvRating": 0.84,
+                        "kast": 64,
+                        "openKills": 0,
+                        "tradeKills": 2,
+                        "playerId": "248878876",
+                        "name": "proFeed",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/850e0ad405588add9714a17546713d6af045b08f_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "2274432801463660": {
+        "matchId": "2274432801463660",
+        "map": "dust2",
+        "score": {
+            "team1": 13,
+            "team2": 9
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 31,
+                        "deaths": 14,
+                        "assists": 5,
+                        "damage": 2922,
+                        "adr": 133,
+                        "adrDiff": 62,
+                        "hltvRating": 1.97,
+                        "kast": 77,
+                        "openKills": 3,
+                        "tradeKills": 5,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 21,
+                        "deaths": 17,
+                        "assists": 8,
+                        "damage": 2621,
+                        "adr": 119,
+                        "adrDiff": 35,
+                        "hltvRating": 1.49,
+                        "kast": 72,
+                        "openKills": 6,
+                        "tradeKills": 1,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 12,
+                        "assists": 4,
+                        "damage": 1365,
+                        "adr": 62,
+                        "adrDiff": 4,
+                        "hltvRating": 1.01,
+                        "kast": 63,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 16,
+                        "assists": 8,
+                        "damage": 1369,
+                        "adr": 62,
+                        "adrDiff": -15,
+                        "hltvRating": 0.98,
+                        "kast": 90,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "248878876",
+                        "name": "proFeed",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/850e0ad405588add9714a17546713d6af045b08f_medium.jpg"
+                    },
+                    {
+                        "kills": 7,
+                        "deaths": 15,
+                        "assists": 5,
+                        "damage": 1093,
+                        "adr": 50,
+                        "adrDiff": -26,
+                        "hltvRating": 0.64,
+                        "kast": 68,
+                        "openKills": 0,
+                        "tradeKills": 1,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 27,
+                        "deaths": 17,
+                        "assists": 7,
+                        "damage": 2675,
+                        "adr": 122,
+                        "adrDiff": 35,
+                        "hltvRating": 1.71,
+                        "kast": 86,
+                        "openKills": 4,
+                        "tradeKills": 3,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 22,
+                        "deaths": 16,
+                        "assists": 2,
+                        "damage": 2093,
+                        "adr": 95,
+                        "adrDiff": 12,
+                        "hltvRating": 1.35,
+                        "kast": 72,
+                        "openKills": 3,
+                        "tradeKills": 4,
+                        "playerId": "192104407",
+                        "name": "Amelot",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 966,
+                        "adr": 44,
+                        "adrDiff": -46,
+                        "hltvRating": 0.61,
+                        "kast": 68,
+                        "openKills": 2,
+                        "tradeKills": 1,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 1154,
+                        "adr": 52,
+                        "adrDiff": -37,
+                        "hltvRating": 0.57,
+                        "kast": 54,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    },
+                    {
+                        "kills": 7,
+                        "deaths": 19,
+                        "assists": 4,
+                        "damage": 891,
+                        "adr": 41,
+                        "adrDiff": -50,
+                        "hltvRating": 0.44,
+                        "kast": 54,
+                        "openKills": 0,
+                        "tradeKills": 4,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1242070876921290": {
+        "matchId": "1242070876921290",
+        "map": "mirage",
+        "score": {
+            "team1": 13,
+            "team2": 11
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 24,
+                        "deaths": 15,
+                        "assists": 2,
+                        "damage": 2135,
+                        "adr": 89,
+                        "adrDiff": 20,
+                        "hltvRating": 1.46,
+                        "kast": 83,
+                        "openKills": 3,
+                        "tradeKills": 4,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 20,
+                        "deaths": 15,
+                        "assists": 8,
+                        "damage": 2212,
+                        "adr": 92,
+                        "adrDiff": 15,
+                        "hltvRating": 1.35,
+                        "kast": 79,
+                        "openKills": 3,
+                        "tradeKills": 2,
+                        "playerId": "248878876",
+                        "name": "proFeed",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/850e0ad405588add9714a17546713d6af045b08f_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 2107,
+                        "adr": 88,
+                        "adrDiff": 12,
+                        "hltvRating": 1.24,
+                        "kast": 79,
+                        "openKills": 6,
+                        "tradeKills": 3,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 15,
+                        "assists": 10,
+                        "damage": 1743,
+                        "adr": 73,
+                        "adrDiff": -1,
+                        "hltvRating": 0.97,
+                        "kast": 79,
+                        "openKills": 0,
+                        "tradeKills": 4,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 16,
+                        "assists": 2,
+                        "damage": 1253,
+                        "adr": 52,
+                        "adrDiff": -23,
+                        "hltvRating": 0.8,
+                        "kast": 66,
+                        "openKills": 1,
+                        "tradeKills": 3,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 16,
+                        "deaths": 16,
+                        "assists": 4,
+                        "damage": 1973,
+                        "adr": 82,
+                        "adrDiff": 5,
+                        "hltvRating": 1.12,
+                        "kast": 70,
+                        "openKills": 5,
+                        "tradeKills": 0,
+                        "playerId": "192104407",
+                        "name": "Amelot",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 19,
+                        "deaths": 16,
+                        "assists": 3,
+                        "damage": 1716,
+                        "adr": 72,
+                        "adrDiff": -5,
+                        "hltvRating": 1.05,
+                        "kast": 66,
+                        "openKills": 0,
+                        "tradeKills": 5,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 15,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 1957,
+                        "adr": 82,
+                        "adrDiff": 0,
+                        "hltvRating": 0.97,
+                        "kast": 70,
+                        "openKills": 2,
+                        "tradeKills": 4,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 17,
+                        "assists": 5,
+                        "damage": 1476,
+                        "adr": 62,
+                        "adrDiff": -18,
+                        "hltvRating": 0.94,
+                        "kast": 66,
+                        "openKills": 2,
+                        "tradeKills": 1,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 19,
+                        "assists": 8,
+                        "damage": 1755,
+                        "adr": 73,
+                        "adrDiff": -15,
+                        "hltvRating": 0.83,
+                        "kast": 70,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1026334595471300": {
+        "matchId": "1026334595471300",
+        "map": "inferno",
+        "score": {
+            "team1": 13,
+            "team2": 7
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 22,
+                        "deaths": 16,
+                        "assists": 4,
+                        "damage": 2209,
+                        "adr": 110,
+                        "adrDiff": 19,
+                        "hltvRating": 1.51,
+                        "kast": 75,
+                        "openKills": 3,
+                        "tradeKills": 3,
+                        "playerId": "192104407",
+                        "name": "Amelot",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 1442,
+                        "adr": 72,
+                        "adrDiff": -25,
+                        "hltvRating": 0.79,
+                        "kast": 64,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 18,
+                        "assists": 3,
+                        "damage": 1172,
+                        "adr": 59,
+                        "adrDiff": -36,
+                        "hltvRating": 0.71,
+                        "kast": 69,
+                        "openKills": 3,
+                        "tradeKills": 3,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 14,
+                        "assists": 5,
+                        "damage": 1060,
+                        "adr": 53,
+                        "adrDiff": -26,
+                        "hltvRating": 0.68,
+                        "kast": 64,
+                        "openKills": 0,
+                        "tradeKills": 2,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 18,
+                        "assists": 6,
+                        "damage": 1391,
+                        "adr": 70,
+                        "adrDiff": -26,
+                        "hltvRating": 0.6,
+                        "kast": 60,
+                        "openKills": 0,
+                        "tradeKills": 2,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 30,
+                        "deaths": 12,
+                        "assists": 5,
+                        "damage": 2691,
+                        "adr": 135,
+                        "adrDiff": 55,
+                        "hltvRating": 2.16,
+                        "kast": 80,
+                        "openKills": 6,
+                        "tradeKills": 2,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 10,
+                        "assists": 8,
+                        "damage": 1732,
+                        "adr": 87,
+                        "adrDiff": 19,
+                        "hltvRating": 1.29,
+                        "kast": 80,
+                        "openKills": 1,
+                        "tradeKills": 6,
+                        "playerId": "248878876",
+                        "name": "proFeed",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/850e0ad405588add9714a17546713d6af045b08f_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 11,
+                        "assists": 6,
+                        "damage": 1500,
+                        "adr": 75,
+                        "adrDiff": 16,
+                        "hltvRating": 1.14,
+                        "kast": 75,
+                        "openKills": 1,
+                        "tradeKills": 5,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 16,
+                        "assists": 8,
+                        "damage": 1861,
+                        "adr": 93,
+                        "adrDiff": 6,
+                        "hltvRating": 1.09,
+                        "kast": 85,
+                        "openKills": 2,
+                        "tradeKills": 4,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 13,
+                        "assists": 5,
+                        "damage": 1250,
+                        "adr": 63,
+                        "adrDiff": -11,
+                        "hltvRating": 1,
+                        "kast": 85,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1283824189743080": {
+        "matchId": "1283824189743080",
+        "map": "dust2",
+        "score": {
+            "team1": 13,
+            "team2": 5
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 26,
+                        "deaths": 7,
+                        "assists": 7,
+                        "damage": 2504,
+                        "adr": 139,
+                        "adrDiff": 90,
+                        "hltvRating": 2.36,
+                        "kast": 94,
+                        "openKills": 4,
+                        "tradeKills": 3,
+                        "playerId": "1844654671",
+                        "name": "Ger4eK",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/88c9682a3ce38b91ac417d524189d8ce80a20702_medium.jpg"
+                    },
+                    {
+                        "kills": 20,
+                        "deaths": 8,
+                        "assists": 7,
+                        "damage": 2278,
+                        "adr": 127,
+                        "adrDiff": 63,
+                        "hltvRating": 1.79,
+                        "kast": 94,
+                        "openKills": 0,
+                        "tradeKills": 2,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 11,
+                        "assists": 3,
+                        "damage": 1328,
+                        "adr": 74,
+                        "adrDiff": -4,
+                        "hltvRating": 1.29,
+                        "kast": 94,
+                        "openKills": 6,
+                        "tradeKills": 1,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 12,
+                        "assists": 7,
+                        "damage": 1372,
+                        "adr": 76,
+                        "adrDiff": 7,
+                        "hltvRating": 1.03,
+                        "kast": 77,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 12,
+                        "assists": 2,
+                        "damage": 666,
+                        "adr": 37,
+                        "adrDiff": -34,
+                        "hltvRating": 0.82,
+                        "kast": 72,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 14,
+                        "deaths": 13,
+                        "assists": 1,
+                        "damage": 1546,
+                        "adr": 86,
+                        "adrDiff": 1,
+                        "hltvRating": 1.04,
+                        "kast": 61,
+                        "openKills": 1,
+                        "tradeKills": 3,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 17,
+                        "assists": 4,
+                        "damage": 1387,
+                        "adr": 77,
+                        "adrDiff": -18,
+                        "hltvRating": 0.81,
+                        "kast": 55,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 7,
+                        "deaths": 15,
+                        "assists": 4,
+                        "damage": 999,
+                        "adr": 56,
+                        "adrDiff": -28,
+                        "hltvRating": 0.67,
+                        "kast": 61,
+                        "openKills": 2,
+                        "tradeKills": 0,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 16,
+                        "assists": 7,
+                        "damage": 883,
+                        "adr": 49,
+                        "adrDiff": -42,
+                        "hltvRating": 0.56,
+                        "kast": 61,
+                        "openKills": 0,
+                        "tradeKills": 0,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 17,
+                        "assists": 2,
+                        "damage": 1073,
+                        "adr": 60,
+                        "adrDiff": -40,
+                        "hltvRating": 0.55,
+                        "kast": 44,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "2139210630422270": {
+        "matchId": "2139210630422270",
+        "map": "mirage",
+        "score": {
+            "team1": 13,
+            "team2": 9
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 27,
+                        "deaths": 12,
+                        "assists": 2,
+                        "damage": 2326,
+                        "adr": 106,
+                        "adrDiff": 28,
+                        "hltvRating": 1.68,
+                        "kast": 90,
+                        "openKills": 4,
+                        "tradeKills": 1,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 22,
+                        "deaths": 13,
+                        "assists": 5,
+                        "damage": 2170,
+                        "adr": 99,
+                        "adrDiff": 27,
+                        "hltvRating": 1.47,
+                        "kast": 77,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "1844654671",
+                        "name": "Ger4eK",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/88c9682a3ce38b91ac417d524189d8ce80a20702_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 16,
+                        "assists": 13,
+                        "damage": 2323,
+                        "adr": 106,
+                        "adrDiff": 23,
+                        "hltvRating": 1.19,
+                        "kast": 77,
+                        "openKills": 2,
+                        "tradeKills": 1,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 13,
+                        "assists": 4,
+                        "damage": 1296,
+                        "adr": 62,
+                        "adrDiff": -6,
+                        "hltvRating": 0.85,
+                        "kast": 66,
+                        "openKills": 1,
+                        "tradeKills": 0,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 17,
+                        "assists": 6,
+                        "damage": 1276,
+                        "adr": 58,
+                        "adrDiff": -27,
+                        "hltvRating": 0.68,
+                        "kast": 54,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 15,
+                        "deaths": 17,
+                        "assists": 5,
+                        "damage": 1920,
+                        "adr": 87,
+                        "adrDiff": -3,
+                        "hltvRating": 1.07,
+                        "kast": 63,
+                        "openKills": 4,
+                        "tradeKills": 3,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 18,
+                        "deaths": 20,
+                        "assists": 2,
+                        "damage": 1937,
+                        "adr": 88,
+                        "adrDiff": -7,
+                        "hltvRating": 1.06,
+                        "kast": 63,
+                        "openKills": 3,
+                        "tradeKills": 1,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 15,
+                        "assists": 6,
+                        "damage": 1911,
+                        "adr": 87,
+                        "adrDiff": 8,
+                        "hltvRating": 1.03,
+                        "kast": 50,
+                        "openKills": 0,
+                        "tradeKills": 4,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 17,
+                        "assists": 3,
+                        "damage": 1480,
+                        "adr": 67,
+                        "adrDiff": -19,
+                        "hltvRating": 0.82,
+                        "kast": 63,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 7,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 1090,
+                        "adr": 50,
+                        "adrDiff": -34,
+                        "hltvRating": 0.65,
+                        "kast": 59,
+                        "openKills": 4,
+                        "tradeKills": 0,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1464463199528260": {
+        "matchId": "1464463199528260",
+        "map": "inferno",
+        "score": {
+            "team1": 6,
+            "team2": 13
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 19,
+                        "deaths": 15,
+                        "assists": 6,
+                        "damage": 1795,
+                        "adr": 94,
+                        "adrDiff": 16,
+                        "hltvRating": 1.51,
+                        "kast": 84,
+                        "openKills": 5,
+                        "tradeKills": 0,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 18,
+                        "deaths": 11,
+                        "assists": 3,
+                        "damage": 1772,
+                        "adr": 93,
+                        "adrDiff": 22,
+                        "hltvRating": 1.51,
+                        "kast": 89,
+                        "openKills": 4,
+                        "tradeKills": 3,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 15,
+                        "deaths": 9,
+                        "assists": 5,
+                        "damage": 1598,
+                        "adr": 84,
+                        "adrDiff": 22,
+                        "hltvRating": 1.29,
+                        "kast": 78,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 10,
+                        "assists": 8,
+                        "damage": 1829,
+                        "adr": 96,
+                        "adrDiff": 25,
+                        "hltvRating": 1.26,
+                        "kast": 89,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 12,
+                        "assists": 4,
+                        "damage": 1613,
+                        "adr": 85,
+                        "adrDiff": 14,
+                        "hltvRating": 1.23,
+                        "kast": 68,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 17,
+                        "deaths": 16,
+                        "assists": 4,
+                        "damage": 1749,
+                        "adr": 92,
+                        "adrDiff": 6,
+                        "hltvRating": 1.24,
+                        "kast": 68,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    },
+                    {
+                        "kills": 14,
+                        "deaths": 15,
+                        "assists": 0,
+                        "damage": 1265,
+                        "adr": 67,
+                        "adrDiff": -14,
+                        "hltvRating": 0.89,
+                        "kast": 63,
+                        "openKills": 0,
+                        "tradeKills": 6,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 18,
+                        "assists": 11,
+                        "damage": 1382,
+                        "adr": 73,
+                        "adrDiff": -26,
+                        "hltvRating": 0.84,
+                        "kast": 73,
+                        "openKills": 5,
+                        "tradeKills": 0,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 15,
+                        "assists": 8,
+                        "damage": 1483,
+                        "adr": 78,
+                        "adrDiff": -18,
+                        "hltvRating": 0.77,
+                        "kast": 57,
+                        "openKills": 0,
+                        "tradeKills": 2,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 7,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 885,
+                        "adr": 47,
+                        "adrDiff": -51,
+                        "hltvRating": 0.54,
+                        "kast": 68,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "1844654671",
+                        "name": "Ger4eK",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/88c9682a3ce38b91ac417d524189d8ce80a20702_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1542964674592920": {
+        "matchId": "1542964674592920",
+        "map": "dust2",
+        "score": {
+            "team1": 10,
+            "team2": 17
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 15,
+                        "deaths": 14,
+                        "assists": 4,
+                        "damage": 1823,
+                        "adr": 122,
+                        "adrDiff": 28,
+                        "hltvRating": 1.38,
+                        "kast": 80,
+                        "openKills": 2,
+                        "tradeKills": 1,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 13,
+                        "assists": 4,
+                        "damage": 1265,
+                        "adr": 84,
+                        "adrDiff": -7,
+                        "hltvRating": 1.04,
+                        "kast": 66,
+                        "openKills": 3,
+                        "tradeKills": 3,
+                        "playerId": "1844654671",
+                        "name": "Ger4eK",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/88c9682a3ce38b91ac417d524189d8ce80a20702_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 13,
+                        "assists": 4,
+                        "damage": 961,
+                        "adr": 64,
+                        "adrDiff": -26,
+                        "hltvRating": 0.74,
+                        "kast": 60,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 14,
+                        "assists": 2,
+                        "damage": 939,
+                        "adr": 63,
+                        "adrDiff": -33,
+                        "hltvRating": 0.64,
+                        "kast": 53,
+                        "openKills": 0,
+                        "tradeKills": 1,
+                        "playerId": "198034205",
+                        "name": "Grisha",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/9978d0fc182121ad37da16262eb3b304ed81540b_medium.jpg"
+                    },
+                    {
+                        "kills": 5,
+                        "deaths": 14,
+                        "assists": 4,
+                        "damage": 826,
+                        "adr": 55,
+                        "adrDiff": -38,
+                        "hltvRating": 0.48,
+                        "kast": 46,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 19,
+                        "deaths": 8,
+                        "assists": 4,
+                        "damage": 1913,
+                        "adr": 128,
+                        "adrDiff": 42,
+                        "hltvRating": 1.82,
+                        "kast": 100,
+                        "openKills": 1,
+                        "tradeKills": 6,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 20,
+                        "deaths": 10,
+                        "assists": 2,
+                        "damage": 1710,
+                        "adr": 114,
+                        "adrDiff": 39,
+                        "hltvRating": 1.75,
+                        "kast": 93,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 12,
+                        "assists": 8,
+                        "damage": 1513,
+                        "adr": 101,
+                        "adrDiff": 17,
+                        "hltvRating": 1.41,
+                        "kast": 86,
+                        "openKills": 5,
+                        "tradeKills": 2,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 8,
+                        "assists": 2,
+                        "damage": 737,
+                        "adr": 49,
+                        "adrDiff": -15,
+                        "hltvRating": 0.99,
+                        "kast": 86,
+                        "openKills": 0,
+                        "tradeKills": 5,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    },
+                    {
+                        "kills": 7,
+                        "deaths": 12,
+                        "assists": 4,
+                        "damage": 1007,
+                        "adr": 67,
+                        "adrDiff": -26,
+                        "hltvRating": 0.71,
+                        "kast": 73,
+                        "openKills": 0,
+                        "tradeKills": 1,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "2267479609565490": {
+        "matchId": "2267479609565490",
+        "map": "mirage",
+        "score": {
+            "team1": 13,
+            "team2": 10
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 26,
+                        "deaths": 16,
+                        "assists": 6,
+                        "damage": 2773,
+                        "adr": 121,
+                        "adrDiff": 39,
+                        "hltvRating": 1.62,
+                        "kast": 78,
+                        "openKills": 3,
+                        "tradeKills": 3,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 20,
+                        "deaths": 15,
+                        "assists": 0,
+                        "damage": 1738,
+                        "adr": 76,
+                        "adrDiff": 5,
+                        "hltvRating": 1.26,
+                        "kast": 69,
+                        "openKills": 3,
+                        "tradeKills": 0,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 15,
+                        "deaths": 13,
+                        "assists": 3,
+                        "damage": 1926,
+                        "adr": 84,
+                        "adrDiff": 20,
+                        "hltvRating": 1.14,
+                        "kast": 69,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 15,
+                        "deaths": 15,
+                        "assists": 7,
+                        "damage": 1843,
+                        "adr": 80,
+                        "adrDiff": 2,
+                        "hltvRating": 1.01,
+                        "kast": 69,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 17,
+                        "assists": 5,
+                        "damage": 922,
+                        "adr": 40,
+                        "adrDiff": -40,
+                        "hltvRating": 0.57,
+                        "kast": 60,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 23,
+                        "deaths": 16,
+                        "assists": 3,
+                        "damage": 2373,
+                        "adr": 103,
+                        "adrDiff": 22,
+                        "hltvRating": 1.56,
+                        "kast": 78,
+                        "openKills": 8,
+                        "tradeKills": 2,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 17,
+                        "assists": 9,
+                        "damage": 1926,
+                        "adr": 84,
+                        "adrDiff": 0,
+                        "hltvRating": 1.07,
+                        "kast": 69,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 15,
+                        "deaths": 15,
+                        "assists": 3,
+                        "damage": 1667,
+                        "adr": 72,
+                        "adrDiff": 4,
+                        "hltvRating": 1.03,
+                        "kast": 60,
+                        "openKills": 2,
+                        "tradeKills": 1,
+                        "playerId": "1844654671",
+                        "name": "Ger4eK",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/88c9682a3ce38b91ac417d524189d8ce80a20702_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 19,
+                        "assists": 8,
+                        "damage": 1792,
+                        "adr": 78,
+                        "adrDiff": -10,
+                        "hltvRating": 0.97,
+                        "kast": 73,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    },
+                    {
+                        "kills": 6,
+                        "deaths": 17,
+                        "assists": 4,
+                        "damage": 787,
+                        "adr": 34,
+                        "adrDiff": -43,
+                        "hltvRating": 0.47,
+                        "kast": 52,
+                        "openKills": 1,
+                        "tradeKills": 0,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1966688605995550": {
+        "matchId": "1966688605995550",
+        "map": "inferno",
+        "score": {
+            "team1": 13,
+            "team2": 7
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 18,
+                        "deaths": 16,
+                        "assists": 3,
+                        "damage": 1588,
+                        "adr": 79,
+                        "adrDiff": -3,
+                        "hltvRating": 1.38,
+                        "kast": 80,
+                        "openKills": 8,
+                        "tradeKills": 2,
+                        "playerId": "1844654671",
+                        "name": "Ger4eK",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/88c9682a3ce38b91ac417d524189d8ce80a20702_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 17,
+                        "assists": 6,
+                        "damage": 1521,
+                        "adr": 76,
+                        "adrDiff": -9,
+                        "hltvRating": 1.04,
+                        "kast": 80,
+                        "openKills": 3,
+                        "tradeKills": 3,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 17,
+                        "assists": 9,
+                        "damage": 1926,
+                        "adr": 96,
+                        "adrDiff": 7,
+                        "hltvRating": 0.98,
+                        "kast": 69,
+                        "openKills": 1,
+                        "tradeKills": 3,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 15,
+                        "assists": 4,
+                        "damage": 1328,
+                        "adr": 66,
+                        "adrDiff": -16,
+                        "hltvRating": 0.87,
+                        "kast": 75,
+                        "openKills": 1,
+                        "tradeKills": 4,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 16,
+                        "assists": 4,
+                        "damage": 1183,
+                        "adr": 59,
+                        "adrDiff": -25,
+                        "hltvRating": 0.67,
+                        "kast": 60,
+                        "openKills": 0,
+                        "tradeKills": 4,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 25,
+                        "deaths": 10,
+                        "assists": 4,
+                        "damage": 2413,
+                        "adr": 121,
+                        "adrDiff": 48,
+                        "hltvRating": 1.88,
+                        "kast": 85,
+                        "openKills": 4,
+                        "tradeKills": 2,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 18,
+                        "deaths": 17,
+                        "assists": 10,
+                        "damage": 2258,
+                        "adr": 113,
+                        "adrDiff": 20,
+                        "hltvRating": 1.26,
+                        "kast": 80,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 13,
+                        "assists": 3,
+                        "damage": 1250,
+                        "adr": 63,
+                        "adrDiff": -12,
+                        "hltvRating": 1.08,
+                        "kast": 69,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 15,
+                        "assists": 7,
+                        "damage": 1404,
+                        "adr": 70,
+                        "adrDiff": -9,
+                        "hltvRating": 0.95,
+                        "kast": 89,
+                        "openKills": 1,
+                        "tradeKills": 3,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 10,
+                        "assists": 6,
+                        "damage": 1094,
+                        "adr": 55,
+                        "adrDiff": -5,
+                        "hltvRating": 0.94,
+                        "kast": 85,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1364694260159750": {
+        "matchId": "1364694260159750",
+        "map": "nuke",
+        "score": {
+            "team1": 13,
+            "team2": 11
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 30,
+                        "deaths": 17,
+                        "assists": 5,
+                        "damage": 2949,
+                        "adr": 123,
+                        "adrDiff": 57,
+                        "hltvRating": 1.89,
+                        "kast": 79,
+                        "openKills": 6,
+                        "tradeKills": 4,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 18,
+                        "deaths": 17,
+                        "assists": 5,
+                        "damage": 2175,
+                        "adr": 91,
+                        "adrDiff": 8,
+                        "hltvRating": 1.15,
+                        "kast": 79,
+                        "openKills": 2,
+                        "tradeKills": 5,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 15,
+                        "assists": 4,
+                        "damage": 1810,
+                        "adr": 75,
+                        "adrDiff": 4,
+                        "hltvRating": 1.09,
+                        "kast": 66,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 17,
+                        "assists": 9,
+                        "damage": 1906,
+                        "adr": 79,
+                        "adrDiff": 4,
+                        "hltvRating": 1.09,
+                        "kast": 70,
+                        "openKills": 3,
+                        "tradeKills": 6,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 15,
+                        "assists": 3,
+                        "damage": 1126,
+                        "adr": 47,
+                        "adrDiff": -20,
+                        "hltvRating": 0.75,
+                        "kast": 70,
+                        "openKills": 1,
+                        "tradeKills": 1,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 23,
+                        "deaths": 19,
+                        "assists": 4,
+                        "damage": 2578,
+                        "adr": 107,
+                        "adrDiff": 22,
+                        "hltvRating": 1.42,
+                        "kast": 75,
+                        "openKills": 6,
+                        "tradeKills": 3,
+                        "playerId": "1844654671",
+                        "name": "Ger4eK",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/88c9682a3ce38b91ac417d524189d8ce80a20702_medium.jpg"
+                    },
+                    {
+                        "kills": 17,
+                        "deaths": 20,
+                        "assists": 6,
+                        "damage": 1910,
+                        "adr": 80,
+                        "adrDiff": -16,
+                        "hltvRating": 0.95,
+                        "kast": 70,
+                        "openKills": 2,
+                        "tradeKills": 8,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 15,
+                        "deaths": 18,
+                        "assists": 4,
+                        "damage": 1518,
+                        "adr": 63,
+                        "adrDiff": -23,
+                        "hltvRating": 0.89,
+                        "kast": 62,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 17,
+                        "assists": 1,
+                        "damage": 1492,
+                        "adr": 62,
+                        "adrDiff": -17,
+                        "hltvRating": 0.88,
+                        "kast": 70,
+                        "openKills": 0,
+                        "tradeKills": 2,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    },
+                    {
+                        "kills": 10,
+                        "deaths": 18,
+                        "assists": 5,
+                        "damage": 1287,
+                        "adr": 54,
+                        "adrDiff": -28,
+                        "hltvRating": 0.68,
+                        "kast": 70,
+                        "openKills": 0,
+                        "tradeKills": 1,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1249792710290570": {
+        "matchId": "1249792710290570",
+        "map": "dust2",
+        "score": {
+            "team1": 16,
+            "team2": 13
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 34,
+                        "deaths": 22,
+                        "assists": 4,
+                        "damage": 3237,
+                        "adr": 112,
+                        "adrDiff": 31,
+                        "hltvRating": 1.57,
+                        "kast": 72,
+                        "openKills": 5,
+                        "tradeKills": 6,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 25,
+                        "deaths": 25,
+                        "assists": 10,
+                        "damage": 2808,
+                        "adr": 97,
+                        "adrDiff": 3,
+                        "hltvRating": 1.22,
+                        "kast": 79,
+                        "openKills": 5,
+                        "tradeKills": 4,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 21,
+                        "deaths": 22,
+                        "assists": 9,
+                        "damage": 2358,
+                        "adr": 81,
+                        "adrDiff": -3,
+                        "hltvRating": 1.01,
+                        "kast": 75,
+                        "openKills": 0,
+                        "tradeKills": 4,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 23,
+                        "assists": 6,
+                        "damage": 1417,
+                        "adr": 49,
+                        "adrDiff": -41,
+                        "hltvRating": 0.52,
+                        "kast": 51,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 26,
+                        "assists": 6,
+                        "damage": 1469,
+                        "adr": 51,
+                        "adrDiff": -45,
+                        "hltvRating": 0.48,
+                        "kast": 55,
+                        "openKills": 0,
+                        "tradeKills": 5,
+                        "playerId": "1896111306",
+                        "name": "влад",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 26,
+                        "deaths": 24,
+                        "assists": 15,
+                        "damage": 3148,
+                        "adr": 109,
+                        "adrDiff": 23,
+                        "hltvRating": 1.44,
+                        "kast": 86,
+                        "openKills": 6,
+                        "tradeKills": 3,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 28,
+                        "deaths": 17,
+                        "assists": 4,
+                        "damage": 2699,
+                        "adr": 93,
+                        "adrDiff": 21,
+                        "hltvRating": 1.39,
+                        "kast": 68,
+                        "openKills": 3,
+                        "tradeKills": 3,
+                        "playerId": "354530887",
+                        "name": "|_ Smoke _|",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/4c01261544ae063f01c3a526e5e05ca2ca35d0ea_medium.jpg"
+                    },
+                    {
+                        "kills": 23,
+                        "deaths": 17,
+                        "assists": 7,
+                        "damage": 2403,
+                        "adr": 83,
+                        "adrDiff": 12,
+                        "hltvRating": 1.25,
+                        "kast": 93,
+                        "openKills": 1,
+                        "tradeKills": 3,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 20,
+                        "deaths": 25,
+                        "assists": 14,
+                        "damage": 2680,
+                        "adr": 92,
+                        "adrDiff": 5,
+                        "hltvRating": 1.12,
+                        "kast": 75,
+                        "openKills": 6,
+                        "tradeKills": 3,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 20,
+                        "deaths": 20,
+                        "assists": 4,
+                        "damage": 1868,
+                        "adr": 64,
+                        "adrDiff": -12,
+                        "hltvRating": 0.92,
+                        "kast": 62,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "707990675155210": {
+        "matchId": "707990675155210",
+        "map": "mirage",
+        "score": {
+            "team1": 13,
+            "team2": 11
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 29,
+                        "deaths": 14,
+                        "assists": 3,
+                        "damage": 2696,
+                        "adr": 112,
+                        "adrDiff": 52,
+                        "hltvRating": 1.67,
+                        "kast": 87,
+                        "openKills": 0,
+                        "tradeKills": 8,
+                        "playerId": "354530887",
+                        "name": "|_ Smoke _|",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/4c01261544ae063f01c3a526e5e05ca2ca35d0ea_medium.jpg"
+                    },
+                    {
+                        "kills": 24,
+                        "deaths": 18,
+                        "assists": 12,
+                        "damage": 2869,
+                        "adr": 120,
+                        "adrDiff": 33,
+                        "hltvRating": 1.55,
+                        "kast": 75,
+                        "openKills": 7,
+                        "tradeKills": 0,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 19,
+                        "deaths": 19,
+                        "assists": 6,
+                        "damage": 1816,
+                        "adr": 76,
+                        "adrDiff": -10,
+                        "hltvRating": 1.18,
+                        "kast": 75,
+                        "openKills": 5,
+                        "tradeKills": 0,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 14,
+                        "deaths": 16,
+                        "assists": 5,
+                        "damage": 1450,
+                        "adr": 60,
+                        "adrDiff": -13,
+                        "hltvRating": 0.93,
+                        "kast": 79,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 14,
+                        "assists": 8,
+                        "damage": 1316,
+                        "adr": 55,
+                        "adrDiff": -15,
+                        "hltvRating": 0.84,
+                        "kast": 75,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 26,
+                        "deaths": 19,
+                        "assists": 3,
+                        "damage": 2247,
+                        "adr": 94,
+                        "adrDiff": 5,
+                        "hltvRating": 1.48,
+                        "kast": 66,
+                        "openKills": 5,
+                        "tradeKills": 3,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 18,
+                        "deaths": 18,
+                        "assists": 9,
+                        "damage": 2203,
+                        "adr": 96,
+                        "adrDiff": 14,
+                        "hltvRating": 1.18,
+                        "kast": 78,
+                        "openKills": 2,
+                        "tradeKills": 2,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 20,
+                        "assists": 7,
+                        "damage": 1795,
+                        "adr": 75,
+                        "adrDiff": -10,
+                        "hltvRating": 0.82,
+                        "kast": 62,
+                        "openKills": 2,
+                        "tradeKills": 1,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 21,
+                        "assists": 9,
+                        "damage": 1508,
+                        "adr": 63,
+                        "adrDiff": -25,
+                        "hltvRating": 0.72,
+                        "kast": 62,
+                        "openKills": 1,
+                        "tradeKills": 0,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 11,
+                        "deaths": 21,
+                        "assists": 5,
+                        "damage": 1272,
+                        "adr": 53,
+                        "adrDiff": -35,
+                        "hltvRating": 0.68,
+                        "kast": 62,
+                        "openKills": 2,
+                        "tradeKills": 6,
+                        "playerId": "1896111306",
+                        "name": "влад",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "2471622062334420": {
+        "matchId": "2471622062334420",
+        "map": "inferno",
+        "score": {
+            "team1": 13,
+            "team2": 10
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 26,
+                        "deaths": 17,
+                        "assists": 8,
+                        "damage": 2890,
+                        "adr": 126,
+                        "adrDiff": 41,
+                        "hltvRating": 1.74,
+                        "kast": 78,
+                        "openKills": 7,
+                        "tradeKills": 1,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 19,
+                        "deaths": 16,
+                        "assists": 3,
+                        "damage": 2018,
+                        "adr": 88,
+                        "adrDiff": 10,
+                        "hltvRating": 1.2,
+                        "kast": 65,
+                        "openKills": 3,
+                        "tradeKills": 2,
+                        "playerId": "161229674",
+                        "name": "ALIVE",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/44793294bec94b4da7db32bec946db81e0a716d1_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 17,
+                        "assists": 7,
+                        "damage": 1740,
+                        "adr": 76,
+                        "adrDiff": -11,
+                        "hltvRating": 0.86,
+                        "kast": 73,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "1896111306",
+                        "name": "влад",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg"
+                    },
+                    {
+                        "kills": 8,
+                        "deaths": 14,
+                        "assists": 6,
+                        "damage": 1347,
+                        "adr": 64,
+                        "adrDiff": -5,
+                        "hltvRating": 0.82,
+                        "kast": 61,
+                        "openKills": 2,
+                        "tradeKills": 1,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 17,
+                        "assists": 4,
+                        "damage": 1366,
+                        "adr": 59,
+                        "adrDiff": -23,
+                        "hltvRating": 0.81,
+                        "kast": 65,
+                        "openKills": 1,
+                        "tradeKills": 2,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 19,
+                        "deaths": 17,
+                        "assists": 7,
+                        "damage": 2321,
+                        "adr": 101,
+                        "adrDiff": 13,
+                        "hltvRating": 1.24,
+                        "kast": 65,
+                        "openKills": 4,
+                        "tradeKills": 1,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 19,
+                        "deaths": 17,
+                        "assists": 4,
+                        "damage": 1920,
+                        "adr": 83,
+                        "adrDiff": -5,
+                        "hltvRating": 1.12,
+                        "kast": 69,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "354530887",
+                        "name": "|_ Smoke _|",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/4c01261544ae063f01c3a526e5e05ca2ca35d0ea_medium.jpg"
+                    },
+                    {
+                        "kills": 15,
+                        "deaths": 16,
+                        "assists": 7,
+                        "damage": 1741,
+                        "adr": 76,
+                        "adrDiff": -3,
+                        "hltvRating": 1.02,
+                        "kast": 73,
+                        "openKills": 0,
+                        "tradeKills": 2,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 13,
+                        "deaths": 18,
+                        "assists": 4,
+                        "damage": 1388,
+                        "adr": 60,
+                        "adrDiff": -28,
+                        "hltvRating": 0.86,
+                        "kast": 73,
+                        "openKills": 2,
+                        "tradeKills": 0,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 16,
+                        "assists": 4,
+                        "damage": 1385,
+                        "adr": 60,
+                        "adrDiff": -25,
+                        "hltvRating": 0.77,
+                        "kast": 65,
+                        "openKills": 1,
+                        "tradeKills": 3,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "2559317815364320": {
+        "matchId": "2559317815364320",
+        "map": "dust2",
+        "score": {
+            "team1": 19,
+            "team2": 17
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 34,
+                        "deaths": 25,
+                        "assists": 13,
+                        "damage": 3880,
+                        "adr": 108,
+                        "adrDiff": 33,
+                        "hltvRating": 1.45,
+                        "kast": 91,
+                        "openKills": 2,
+                        "tradeKills": 5,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 37,
+                        "deaths": 30,
+                        "assists": 6,
+                        "damage": 4117,
+                        "adr": 114,
+                        "adrDiff": 28,
+                        "hltvRating": 1.41,
+                        "kast": 75,
+                        "openKills": 6,
+                        "tradeKills": 3,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 31,
+                        "deaths": 27,
+                        "assists": 3,
+                        "damage": 2570,
+                        "adr": 71,
+                        "adrDiff": -9,
+                        "hltvRating": 1.14,
+                        "kast": 72,
+                        "openKills": 5,
+                        "tradeKills": 7,
+                        "playerId": "919833079",
+                        "name": "wasted",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/173f2bb4245ea8e3085f41d580b63348a7dfa832_medium.jpg"
+                    },
+                    {
+                        "kills": 21,
+                        "deaths": 24,
+                        "assists": 4,
+                        "damage": 2189,
+                        "adr": 61,
+                        "adrDiff": -17,
+                        "hltvRating": 0.83,
+                        "kast": 58,
+                        "openKills": 0,
+                        "tradeKills": 7,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 14,
+                        "deaths": 28,
+                        "assists": 9,
+                        "damage": 2048,
+                        "adr": 57,
+                        "adrDiff": -28,
+                        "hltvRating": 0.64,
+                        "kast": 66,
+                        "openKills": 0,
+                        "tradeKills": 1,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 41,
+                        "deaths": 27,
+                        "assists": 9,
+                        "damage": 4127,
+                        "adr": 115,
+                        "adrDiff": 33,
+                        "hltvRating": 1.62,
+                        "kast": 80,
+                        "openKills": 7,
+                        "tradeKills": 8,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 31,
+                        "deaths": 28,
+                        "assists": 14,
+                        "damage": 3886,
+                        "adr": 108,
+                        "adrDiff": 24,
+                        "hltvRating": 1.37,
+                        "kast": 75,
+                        "openKills": 8,
+                        "tradeKills": 1,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 30,
+                        "deaths": 26,
+                        "assists": 8,
+                        "damage": 2990,
+                        "adr": 83,
+                        "adrDiff": 2,
+                        "hltvRating": 1.17,
+                        "kast": 80,
+                        "openKills": 1,
+                        "tradeKills": 6,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 29,
+                        "assists": 10,
+                        "damage": 1954,
+                        "adr": 54,
+                        "adrDiff": -32,
+                        "hltvRating": 0.7,
+                        "kast": 58,
+                        "openKills": 4,
+                        "tradeKills": 4,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 28,
+                        "assists": 10,
+                        "damage": 1654,
+                        "adr": 46,
+                        "adrDiff": -38,
+                        "hltvRating": 0.68,
+                        "kast": 63,
+                        "openKills": 3,
+                        "tradeKills": 2,
+                        "playerId": "248878876",
+                        "name": "proFeed",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/850e0ad405588add9714a17546713d6af045b08f_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    },
+    "1071305309699760": {
+        "matchId": "1071305309699760",
+        "map": "mirage",
+        "score": {
+            "team1": 13,
+            "team2": 11
+        },
+        "teams": [
+            {
+                "teamNumber": 1,
+                "players": [
+                    {
+                        "kills": 21,
+                        "deaths": 19,
+                        "assists": 10,
+                        "damage": 2634,
+                        "adr": 110,
+                        "adrDiff": 26,
+                        "hltvRating": 1.28,
+                        "kast": 79,
+                        "openKills": 2,
+                        "tradeKills": 4,
+                        "playerId": "296934395",
+                        "name": "mucho_busy",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/6fbea9cc03c0fbc978225c3d7d1890228a140427_medium.jpg"
+                    },
+                    {
+                        "kills": 20,
+                        "deaths": 19,
+                        "assists": 4,
+                        "damage": 2039,
+                        "adr": 85,
+                        "adrDiff": 6,
+                        "hltvRating": 1.1,
+                        "kast": 62,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "190077542",
+                        "name": "Василь Стус",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/2b1bdc540b9cb1ed5f7a85e85004c5e2ce66f17e_medium.jpg"
+                    },
+                    {
+                        "kills": 19,
+                        "deaths": 18,
+                        "assists": 2,
+                        "damage": 1857,
+                        "adr": 77,
+                        "adrDiff": -3,
+                        "hltvRating": 1.05,
+                        "kast": 62,
+                        "openKills": 2,
+                        "tradeKills": 3,
+                        "playerId": "919833079",
+                        "name": "wasted",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/173f2bb4245ea8e3085f41d580b63348a7dfa832_medium.jpg"
+                    },
+                    {
+                        "kills": 16,
+                        "deaths": 17,
+                        "assists": 1,
+                        "damage": 1410,
+                        "adr": 59,
+                        "adrDiff": -14,
+                        "hltvRating": 0.86,
+                        "kast": 58,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "117134459",
+                        "name": "steveeee",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/754522698d04a995e357a303fbfc1333caaf479f_medium.jpg"
+                    },
+                    {
+                        "kills": 9,
+                        "deaths": 19,
+                        "assists": 8,
+                        "damage": 1426,
+                        "adr": 59,
+                        "adrDiff": -27,
+                        "hltvRating": 0.64,
+                        "kast": 54,
+                        "openKills": 2,
+                        "tradeKills": 0,
+                        "playerId": "1133147914",
+                        "name": "ProGooner",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/b93f04b9194fba8980a2dc74947d47d0087ba113_medium.jpg"
+                    }
+                ]
+            },
+            {
+                "teamNumber": 2,
+                "players": [
+                    {
+                        "kills": 26,
+                        "deaths": 18,
+                        "assists": 0,
+                        "damage": 2437,
+                        "adr": 102,
+                        "adrDiff": 21,
+                        "hltvRating": 1.59,
+                        "kast": 75,
+                        "openKills": 8,
+                        "tradeKills": 2,
+                        "playerId": "192104407",
+                        "name": "neverstay717",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/07905e7e0ee6f0bde7700922b094e2c9102c1cb8_medium.jpg"
+                    },
+                    {
+                        "kills": 21,
+                        "deaths": 16,
+                        "assists": 11,
+                        "damage": 2288,
+                        "adr": 95,
+                        "adrDiff": 14,
+                        "hltvRating": 1.27,
+                        "kast": 91,
+                        "openKills": 0,
+                        "tradeKills": 3,
+                        "playerId": "248878876",
+                        "name": "proFeed",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/850e0ad405588add9714a17546713d6af045b08f_medium.jpg"
+                    },
+                    {
+                        "kills": 18,
+                        "deaths": 18,
+                        "assists": 7,
+                        "damage": 2028,
+                        "adr": 85,
+                        "adrDiff": -1,
+                        "hltvRating": 1.14,
+                        "kast": 58,
+                        "openKills": 6,
+                        "tradeKills": 1,
+                        "playerId": "1247341525",
+                        "name": "Киця-Кицюня",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/3c352271686cb0d30d6e6223016b5cb63a7c2513_medium.jpg"
+                    },
+                    {
+                        "kills": 12,
+                        "deaths": 16,
+                        "assists": 6,
+                        "damage": 1372,
+                        "adr": 57,
+                        "adrDiff": -10,
+                        "hltvRating": 0.94,
+                        "kast": 79,
+                        "openKills": 2,
+                        "tradeKills": 5,
+                        "playerId": "100142259",
+                        "name": "refugee94",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/e36366c60623c3c8b3902df6ed283b4d1cc93a2a_medium.jpg"
+                    },
+                    {
+                        "kills": 14,
+                        "deaths": 17,
+                        "assists": 6,
+                        "damage": 1461,
+                        "adr": 61,
+                        "adrDiff": -15,
+                        "hltvRating": 0.86,
+                        "kast": 75,
+                        "openKills": 0,
+                        "tradeKills": 4,
+                        "playerId": "483321100",
+                        "name": "Garik_Ugarik",
+                        "avatar": "https:\/\/avatars.steamstatic.com\/0020d9b0aaef2e5210efee5a857abd9c6f6e63ce_medium.jpg"
+                    }
+                ]
+            }
+        ]
+    }
+}

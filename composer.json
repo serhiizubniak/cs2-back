@@ -1,0 +1,11 @@
+{
+    "name": "cs-2-statistics/backend",
+    "description": "CS2 Statistics Backend API",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
