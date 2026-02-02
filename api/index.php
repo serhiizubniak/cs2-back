@@ -24,6 +24,7 @@ function countTotalPlayers($teams) {
 // Storage file paths
 $storageFile = __DIR__ . '/../data/matches.json';
 $matchesDataFile = __DIR__ . '/../data/matches_data.json'; // Full match data cache
+$jokersFile = __DIR__ . '/../data/jokers.json'; // Joker players storage
 $storageDir = dirname($storageFile);
 
 // Ensure storage directory exists
@@ -65,6 +66,24 @@ function loadMatchesData($file) {
 // Helper function to save full match data cache
 function saveMatchesData($file, $matchesData) {
     return file_put_contents($file, json_encode($matchesData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) !== false;
+}
+
+// Helper function to load jokers
+function loadJokers($file) {
+    if (!file_exists($file)) {
+        return [];
+    }
+    $content = file_get_contents($file);
+    if (empty($content)) {
+        return [];
+    }
+    $data = json_decode($content, true);
+    return is_array($data) ? $data : [];
+}
+
+// Helper function to save jokers
+function saveJokers($file, $jokers) {
+    return file_put_contents($file, json_encode($jokers, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) !== false;
 }
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
@@ -110,6 +129,31 @@ switch ($action) {
         }
         
         $statistics = $calculator->calculateOverallStatistics($allMatches);
+        
+        // Load and merge Joker players
+        $jokers = loadJokers($jokersFile);
+        foreach ($jokers as $joker) {
+            // Add Joker as a player with special identifier
+            $jokerPlayer = [
+                'name' => $joker['name'] ?? 'Joker',
+                'playerId' => $joker['id'] ?? null,
+                'avatar' => $joker['avatar'] ?? 'https://api.dicebear.com/7.x/shapes/svg?seed=Joker&backgroundColor=6366f1&shape1Color=8b5cf6&shape2Color=a855f7',
+                'matches' => 0,
+                'kills' => 0,
+                'deaths' => 0,
+                'assists' => 0,
+                'kd' => 0,
+                'damage' => 0,
+                'avgDamage' => 0,
+                'adr' => 0,
+                'hltvRating' => floatval($joker['rating'] ?? 1.0),
+                'kast' => 0,
+                'openKills' => 0,
+                'tradeKills' => 0,
+                'isJoker' => true
+            ];
+            $statistics['players'][] = $jokerPlayer;
+        }
         
         echo json_encode([
             'success' => true,
@@ -423,6 +467,16 @@ switch ($action) {
             
             $statistics = $calculator->calculateOverallStatistics($allMatches);
             
+            // Load Jokers
+            $jokers = loadJokers($jokersFile);
+            $jokersMap = [];
+            foreach ($jokers as $joker) {
+                $jokerId = $joker['id'] ?? null;
+                if ($jokerId) {
+                    $jokersMap[$jokerId] = $joker;
+                }
+            }
+            
             // Find selected players
             $selectedPlayers = [];
             foreach ($statistics['players'] as $player) {
@@ -435,6 +489,31 @@ switch ($action) {
                 // Match by key
                 if (in_array($key, $playerIds)) {
                     $selectedPlayers[] = $player;
+                }
+            }
+            
+            // Check for Joker players in selection
+            foreach ($playerIds as $playerId) {
+                if (isset($jokersMap[$playerId])) {
+                    $joker = $jokersMap[$playerId];
+                    $selectedPlayers[] = [
+                        'name' => $joker['name'] ?? 'Joker',
+                        'playerId' => $joker['id'] ?? null,
+                        'avatar' => $joker['avatar'] ?? 'https://api.dicebear.com/7.x/shapes/svg?seed=Joker&backgroundColor=6366f1&shape1Color=8b5cf6&shape2Color=a855f7',
+                        'matches' => 0,
+                        'kills' => 0,
+                        'deaths' => 0,
+                        'assists' => 0,
+                        'kd' => 0,
+                        'damage' => 0,
+                        'avgDamage' => 0,
+                        'adr' => 0,
+                        'hltvRating' => floatval($joker['rating'] ?? 1.0),
+                        'kast' => 0,
+                        'openKills' => 0,
+                        'tradeKills' => 0,
+                        'isJoker' => true
+                    ];
                 }
             }
             
@@ -530,6 +609,121 @@ switch ($action) {
                 'success' => true,
                 'team' => $savedTeams[$teamId]
             ]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'error' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+        break;
+        
+    case 'create-joker':
+        // Create a Joker player
+        try {
+            $input = json_decode(file_get_contents('php://input'), true);
+            $name = $input['name'] ?? $_POST['name'] ?? 'Joker';
+            $rating = floatval($input['rating'] ?? $_POST['rating'] ?? 1.0);
+            
+            if ($rating < 0 || $rating > 5) {
+                http_response_code(400);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'Rating must be between 0 and 5'
+                ]);
+                break;
+            }
+            
+            $jokers = loadJokers($jokersFile);
+            $jokerId = 'joker_' . uniqid();
+            
+            $joker = [
+                'id' => $jokerId,
+                'name' => $name,
+                'rating' => $rating,
+                'avatar' => 'https://api.dicebear.com/7.x/shapes/svg?seed=' . urlencode($name) . '&backgroundColor=6366f1&shape1Color=8b5cf6&shape2Color=a855f7',
+                'createdAt' => date('c')
+            ];
+            
+            $jokers[$jokerId] = $joker;
+            
+            if (saveJokers($jokersFile, $jokers)) {
+                echo json_encode([
+                    'success' => true,
+                    'joker' => $joker
+                ]);
+            } else {
+                http_response_code(500);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'Failed to save Joker player'
+                ]);
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'error' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+        break;
+        
+    case 'get-jokers':
+        // Get all Joker players
+        try {
+            $jokers = loadJokers($jokersFile);
+            echo json_encode([
+                'success' => true,
+                'jokers' => array_values($jokers)
+            ]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'error' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+        break;
+        
+    case 'delete-joker':
+        // Delete a Joker player
+        try {
+            $input = json_decode(file_get_contents('php://input'), true);
+            $jokerId = $input['jokerId'] ?? $_POST['jokerId'] ?? '';
+            
+            if (empty($jokerId)) {
+                http_response_code(400);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'Joker ID is required'
+                ]);
+                break;
+            }
+            
+            $jokers = loadJokers($jokersFile);
+            
+            if (!isset($jokers[$jokerId])) {
+                http_response_code(404);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'Joker not found'
+                ]);
+                break;
+            }
+            
+            unset($jokers[$jokerId]);
+            
+            if (saveJokers($jokersFile, $jokers)) {
+                echo json_encode([
+                    'success' => true
+                ]);
+            } else {
+                http_response_code(500);
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'Failed to delete Joker player'
+                ]);
+            }
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode([
