@@ -22,10 +22,12 @@ function countTotalPlayers($teams) {
 }
 
 // Storage file paths
-$storageFile = __DIR__ . '/../data/matches.json';
-$matchesDataFile = __DIR__ . '/../data/matches_data.json'; // Full match data cache
-$jokersFile = __DIR__ . '/../data/jokers.json'; // Joker players storage
-$storageDir = dirname($storageFile);
+// Use DATA_DIR environment variable if set (for Railway Volume), otherwise use default path
+$dataDir = getenv('DATA_DIR') ?: __DIR__ . '/../data';
+$storageFile = $dataDir . '/matches.json';
+$matchesDataFile = $dataDir . '/matches_data.json'; // Full match data cache
+$jokersFile = $dataDir . '/jokers.json'; // Joker players storage
+$storageDir = $dataDir;
 
 // Ensure storage directory exists
 if (!is_dir($storageDir)) {
