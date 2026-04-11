@@ -52,7 +52,13 @@ try {
     Db::pdo();
 } catch (Throwable $e) {
     error_log('DB connection failed: ' . $e->getMessage());
-    fail(500, 'Database connection failed');
+    fail(500, 'Database connection failed', [
+        'debug' => [
+            'message'         => $e->getMessage(),
+            'has_database_url'=> getenv('DATABASE_URL') ? 'yes' : 'no',
+            'pdo_drivers'     => class_exists('PDO') ? PDO::getAvailableDrivers() : 'PDO class missing',
+        ],
+    ]);
     exit;
 }
 
