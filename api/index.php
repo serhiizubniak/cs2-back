@@ -258,9 +258,10 @@ try {
         }
 
         case 'create-teams': {
-            $input     = json_decode(file_get_contents('php://input'), true) ?: [];
-            $playerIds = $input['playerIds'] ?? $_POST['playerIds'] ?? [];
-            $matchIds  = $input['matchIds']  ?? $_GET['match_ids']  ?? $_POST['matchIds']  ?? '';
+            $input      = json_decode(file_get_contents('php://input'), true) ?: [];
+            $playerIds  = $input['playerIds'] ?? $_POST['playerIds'] ?? [];
+            $matchIds   = $input['matchIds']  ?? $_GET['match_ids']  ?? $_POST['matchIds']  ?? '';
+            $dateFilter = is_array($input['dateFilter'] ?? null) ? $input['dateFilter'] : null;
 
             if (empty($playerIds) || !is_array($playerIds) || count($playerIds) !== 10) {
                 fail(400, 'Exactly 10 player IDs are required');
@@ -317,10 +318,12 @@ try {
 
             $teamId = uniqid('team_', true);
             Db::insertTeam($teamId, [
-                'id'          => $teamId,
-                'teams'       => $improvedTeams,
-                'createdAt'   => date('c'),
-                'playerNames' => array_map(fn($p) => $p['name'] ?? '', $selectedPlayers),
+                'id'           => $teamId,
+                'teams'        => $improvedTeams,
+                'createdAt'    => date('c'),
+                'playerNames'  => array_map(fn($p) => $p['name'] ?? '', $selectedPlayers),
+                'dateFilter'   => $dateFilter,
+                'matchesCount' => count($allMatches),
             ]);
 
             echo json_encode([
