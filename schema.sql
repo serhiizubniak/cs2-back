@@ -4,10 +4,14 @@ CREATE TABLE IF NOT EXISTS matches (
     map        TEXT,
     score      JSONB NOT NULL,
     match_data JSONB,
+    match_time TIMESTAMPTZ,
     added_at   TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE INDEX IF NOT EXISTS matches_added_at_idx ON matches (added_at DESC);
+ALTER TABLE matches ADD COLUMN IF NOT EXISTS match_time TIMESTAMPTZ;
+
+CREATE INDEX IF NOT EXISTS matches_added_at_idx  ON matches (added_at DESC);
+CREATE INDEX IF NOT EXISTS matches_match_time_idx ON matches (match_time DESC);
 
 CREATE TABLE IF NOT EXISTS jokers (
     id         TEXT PRIMARY KEY,

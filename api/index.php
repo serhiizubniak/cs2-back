@@ -48,6 +48,15 @@ function countTotalPlayers(array $teams): int {
     return $count;
 }
 
+function normalizeDate($value): ?string {
+    if ($value === null || $value === '') return null;
+    $value = (string) $value;
+    // Accept ISO 8601 or any strtotime-parseable date; reject garbage.
+    $ts = strtotime($value);
+    if ($ts === false) return null;
+    return gmdate('c', $ts);
+}
+
 try {
     Db::pdo();
 } catch (Throwable $e) {
@@ -63,9 +72,11 @@ try {
         case 'get-statistics': {
             $matchIds = $_GET['match_ids'] ?? '';
             $matchIdsArray = array_values(array_filter(array_map('trim', $matchIds ? explode(',', $matchIds) : [])));
+            $from = normalizeDate($_GET['from'] ?? null);
+            $to   = normalizeDate($_GET['to']   ?? null);
 
             $calculator = new StatisticsCalculator();
-            $cache       = Db::getMatchData($matchIdsArray);
+            $cache       = Db::getMatchData($matchIdsArray, $from, $to);
             $parser      = new MatchParser();
             $allMatches  = [];
 
@@ -74,10 +85,14 @@ try {
                     $allMatches[] = $cache[$matchId];
                     continue;
                 }
-                $parsed = $parser->parseMatch($matchId);
-                if ($parsed) {
-                    $allMatches[] = $parsed;
-                    Db::updateMatchData($matchId, $parsed);
+                // Cache miss: only re-parse when no date filter is active,
+                // otherwise we'd bypass the filter silently.
+                if ($from === null && $to === null) {
+                    $parsed = $parser->parseMatch($matchId);
+                    if ($parsed) {
+                        $allMatches[] = $parsed;
+                        Db::updateMatchData($matchId, $parsed);
+                    }
                 }
             }
 
@@ -91,6 +106,7 @@ try {
                 'success'    => true,
                 'statistics' => $statistics,
                 'matches'    => $allMatches,
+                'filter'     => ['from' => $from, 'to' => $to],
             ]);
             break;
         }
@@ -145,9 +161,12 @@ try {
         }
 
         case 'get-matches': {
+            $from = normalizeDate($_GET['from'] ?? null);
+            $to   = normalizeDate($_GET['to']   ?? null);
             echo json_encode([
                 'success' => true,
-                'matches' => Db::getMatches(),
+                'matches' => Db::getMatches($from, $to),
+                'filter'  => ['from' => $from, 'to' => $to],
             ]);
             break;
         }

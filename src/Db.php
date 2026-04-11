@@ -66,18 +66,34 @@ class Db {
         }
     }
 
-    public static function getMatches(): array {
-        $rows = self::pdo()
-            ->query('SELECT id, url, map, score, added_at FROM matches ORDER BY added_at ASC, id ASC')
-            ->fetchAll();
+    public static function getMatches(?string $from = null, ?string $to = null): array {
+        $sql = 'SELECT id, url, map, score, added_at, match_time FROM matches';
+        $where = [];
+        $params = [];
+        if ($from !== null) {
+            $where[] = 'COALESCE(match_time, added_at) >= ?';
+            $params[] = $from;
+        }
+        if ($to !== null) {
+            $where[] = 'COALESCE(match_time, added_at) <= ?';
+            $params[] = $to;
+        }
+        if ($where) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        $sql .= ' ORDER BY COALESCE(match_time, added_at) ASC, id ASC';
+
+        $stmt = self::pdo()->prepare($sql);
+        $stmt->execute($params);
 
         return array_map(fn($r) => [
-            'id'      => $r['id'],
-            'url'     => $r['url'],
-            'map'     => $r['map'],
-            'score'   => json_decode($r['score'], true),
-            'addedAt' => self::toIso8601($r['added_at']),
-        ], $rows);
+            'id'        => $r['id'],
+            'url'       => $r['url'],
+            'map'       => $r['map'],
+            'score'     => json_decode($r['score'], true),
+            'addedAt'   => self::toIso8601($r['added_at']),
+            'matchTime' => $r['match_time'] ? self::toIso8601($r['match_time']) : null,
+        ], $stmt->fetchAll());
     }
 
     public static function matchExists(string $id): bool {
@@ -86,40 +102,66 @@ class Db {
         return (bool) $stmt->fetchColumn();
     }
 
-    public static function insertMatch(string $id, string $url, ?string $map, array $score, ?array $matchData, ?string $addedAt = null): array {
-        if ($addedAt !== null) {
-            $stmt = self::pdo()->prepare(
-                'INSERT INTO matches (id, url, map, score, match_data, added_at) VALUES (?, ?, ?, ?::jsonb, ?::jsonb, ?) RETURNING added_at'
-            );
-            $stmt->execute([
-                $id,
-                $url,
-                $map,
-                json_encode($score, JSON_UNESCAPED_UNICODE),
-                $matchData !== null ? json_encode($matchData, JSON_UNESCAPED_UNICODE) : null,
-                $addedAt,
-            ]);
-        } else {
-            $stmt = self::pdo()->prepare(
-                'INSERT INTO matches (id, url, map, score, match_data) VALUES (?, ?, ?, ?::jsonb, ?::jsonb) RETURNING added_at'
-            );
-            $stmt->execute([
-                $id,
-                $url,
-                $map,
-                json_encode($score, JSON_UNESCAPED_UNICODE),
-                $matchData !== null ? json_encode($matchData, JSON_UNESCAPED_UNICODE) : null,
-            ]);
-        }
-        $storedAddedAt = $stmt->fetchColumn();
+    public static function insertMatch(
+        string $id,
+        string $url,
+        ?string $map,
+        array $score,
+        ?array $matchData,
+        ?string $addedAt = null,
+        ?string $matchTime = null
+    ): array {
+        $matchTime = $matchTime ?: self::extractMatchTime($matchData);
+
+        $stmt = self::pdo()->prepare(
+            'INSERT INTO matches (id, url, map, score, match_data, added_at, match_time)
+             VALUES (?, ?, ?, ?::jsonb, ?::jsonb, COALESCE(?::timestamptz, now()), ?::timestamptz)
+             RETURNING added_at, match_time'
+        );
+        $stmt->execute([
+            $id,
+            $url,
+            $map,
+            json_encode($score, JSON_UNESCAPED_UNICODE),
+            $matchData !== null ? json_encode($matchData, JSON_UNESCAPED_UNICODE) : null,
+            $addedAt,
+            $matchTime,
+        ]);
+        $row = $stmt->fetch();
 
         return [
-            'id'      => $id,
-            'url'     => $url,
-            'map'     => $map,
-            'score'   => $score,
-            'addedAt' => self::toIso8601($storedAddedAt),
+            'id'        => $id,
+            'url'       => $url,
+            'map'       => $map,
+            'score'     => $score,
+            'addedAt'   => self::toIso8601($row['added_at']),
+            'matchTime' => $row['match_time'] ? self::toIso8601($row['match_time']) : null,
         ];
+    }
+
+    public static function updateMatchFull(string $id, ?string $map, array $score, array $matchData): bool {
+        $stmt = self::pdo()->prepare(
+            'UPDATE matches
+             SET map = ?, score = ?::jsonb, match_data = ?::jsonb, match_time = ?::timestamptz
+             WHERE id = ?'
+        );
+        $stmt->execute([
+            $map,
+            json_encode($score, JSON_UNESCAPED_UNICODE),
+            json_encode($matchData, JSON_UNESCAPED_UNICODE),
+            self::extractMatchTime($matchData),
+            $id,
+        ]);
+        return $stmt->rowCount() > 0;
+    }
+
+    private static function extractMatchTime(?array $matchData): ?string {
+        if (!is_array($matchData)) return null;
+        $iso = $matchData['matchTimeIso'] ?? null;
+        if (is_string($iso) && $iso !== '') return $iso;
+        $ms = $matchData['matchTime'] ?? null;
+        if (is_int($ms) && $ms > 0) return gmdate('c', intdiv($ms, 1000));
+        return null;
     }
 
     public static function deleteMatch(string $id): bool {
@@ -138,15 +180,24 @@ class Db {
         return $stmt->rowCount() > 0;
     }
 
-    public static function getMatchData(array $ids): array {
+    public static function getMatchData(array $ids, ?string $from = null, ?string $to = null): array {
         if (empty($ids)) {
             return [];
         }
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
-        $stmt = self::pdo()->prepare(
-            "SELECT id, match_data FROM matches WHERE id IN ($placeholders) AND match_data IS NOT NULL"
-        );
-        $stmt->execute(array_values($ids));
+        $sql = "SELECT id, match_data FROM matches
+                WHERE id IN ($placeholders) AND match_data IS NOT NULL";
+        $params = array_values($ids);
+        if ($from !== null) {
+            $sql .= ' AND COALESCE(match_time, added_at) >= ?';
+            $params[] = $from;
+        }
+        if ($to !== null) {
+            $sql .= ' AND COALESCE(match_time, added_at) <= ?';
+            $params[] = $to;
+        }
+        $stmt = self::pdo()->prepare($sql);
+        $stmt->execute($params);
 
         $result = [];
         while ($row = $stmt->fetch()) {
