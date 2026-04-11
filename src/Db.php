@@ -68,7 +68,7 @@ class Db {
 
     public static function getMatches(): array {
         $rows = self::pdo()
-            ->query('SELECT id, url, map, score, added_at FROM matches ORDER BY added_at ASC')
+            ->query('SELECT id, url, map, score, added_at FROM matches ORDER BY added_at ASC, id ASC')
             ->fetchAll();
 
         return array_map(fn($r) => [
@@ -86,25 +86,39 @@ class Db {
         return (bool) $stmt->fetchColumn();
     }
 
-    public static function insertMatch(string $id, string $url, ?string $map, array $score, ?array $matchData): array {
-        $stmt = self::pdo()->prepare(
-            'INSERT INTO matches (id, url, map, score, match_data) VALUES (?, ?, ?, ?::jsonb, ?::jsonb) RETURNING added_at'
-        );
-        $stmt->execute([
-            $id,
-            $url,
-            $map,
-            json_encode($score, JSON_UNESCAPED_UNICODE),
-            $matchData !== null ? json_encode($matchData, JSON_UNESCAPED_UNICODE) : null,
-        ]);
-        $addedAt = $stmt->fetchColumn();
+    public static function insertMatch(string $id, string $url, ?string $map, array $score, ?array $matchData, ?string $addedAt = null): array {
+        if ($addedAt !== null) {
+            $stmt = self::pdo()->prepare(
+                'INSERT INTO matches (id, url, map, score, match_data, added_at) VALUES (?, ?, ?, ?::jsonb, ?::jsonb, ?) RETURNING added_at'
+            );
+            $stmt->execute([
+                $id,
+                $url,
+                $map,
+                json_encode($score, JSON_UNESCAPED_UNICODE),
+                $matchData !== null ? json_encode($matchData, JSON_UNESCAPED_UNICODE) : null,
+                $addedAt,
+            ]);
+        } else {
+            $stmt = self::pdo()->prepare(
+                'INSERT INTO matches (id, url, map, score, match_data) VALUES (?, ?, ?, ?::jsonb, ?::jsonb) RETURNING added_at'
+            );
+            $stmt->execute([
+                $id,
+                $url,
+                $map,
+                json_encode($score, JSON_UNESCAPED_UNICODE),
+                $matchData !== null ? json_encode($matchData, JSON_UNESCAPED_UNICODE) : null,
+            ]);
+        }
+        $storedAddedAt = $stmt->fetchColumn();
 
         return [
             'id'      => $id,
             'url'     => $url,
             'map'     => $map,
             'score'   => $score,
-            'addedAt' => self::toIso8601($addedAt),
+            'addedAt' => self::toIso8601($storedAddedAt),
         ];
     }
 

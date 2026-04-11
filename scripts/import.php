@@ -84,7 +84,8 @@ Db::transaction(function (PDO $pdo) use ($matchesPayload, $parsedByMatchId, &$in
             (string) ($m['url'] ?? ''),
             isset($m['map']) ? (string) $m['map'] : null,
             is_array($m['score'] ?? null) ? $m['score'] : [],
-            $matchData
+            $matchData,
+            isset($m['addedAt']) ? (string) $m['addedAt'] : null
         );
         $inserted++;
         if ($matchData !== null) $withData++;
