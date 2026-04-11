@@ -136,9 +136,12 @@ class MatchParser
 
         $map = $this->normalizeMap($mData['MapName'] ?? ($pp['map']['csgoName'] ?? null));
 
+        $clutches = is_array($pp['clutches'] ?? null) ? $pp['clutches'] : [];
+        $weapons  = is_array($pp['weapons']  ?? null) ? $pp['weapons']  : [];
+
         $teams = [];
         foreach ($base as $idx => $baseTeam) {
-            $teams[] = $this->buildTeam($baseTeam, $sbTeam[$idx] ?? [], $sbVal);
+            $teams[] = $this->buildTeam($baseTeam, $sbTeam[$idx] ?? [], $sbVal, $clutches, $weapons);
         }
 
         usort($teams, fn($a, $b) => $a['teamNumber'] <=> $b['teamNumber']);
@@ -168,7 +171,7 @@ class MatchParser
         ];
     }
 
-    private function buildTeam(array $baseTeam, array $sbTeam, array $sbVal): array
+    private function buildTeam(array $baseTeam, array $sbTeam, array $sbVal, array $allClutches, array $allWeapons): array
     {
         $name       = (string) ($baseTeam['Name'] ?? '');
         $teamNumber = (preg_match('/2/', $name)) ? 2 : 1;
@@ -177,8 +180,10 @@ class MatchParser
         foreach (($baseTeam['Players'] ?? []) as $p) {
             $pid   = (string) ($p['PlayerID'] ?? '');
             if ($pid === '') continue;
-            $stats = $sbVal[$pid] ?? null;
-            $players[] = $this->buildPlayer($p, $stats);
+            $stats   = $sbVal[$pid]       ?? null;
+            $clBlob  = $allClutches[$pid] ?? null;
+            $wBlob   = $allWeapons[$pid]  ?? null;
+            $players[] = $this->buildPlayer($p, $stats, $clBlob, $wBlob);
         }
 
         return [
@@ -193,7 +198,7 @@ class MatchParser
         ];
     }
 
-    private function buildPlayer(array $p, ?array $stats): array
+    private function buildPlayer(array $p, ?array $stats, ?array $clutchesBlob = null, ?array $weaponsBlob = null): array
     {
         $general = $stats['GeneralStats']['ScoreboardPages'] ?? [];
         $tSide   = $stats['TSideStats']['ScoreboardPages']  ?? [];
@@ -262,6 +267,132 @@ class MatchParser
             'closedDoor'         => (int) ($fun['ClosedDoor']   ?? 0),
             'closedDoorBehind'   => (int) ($fun['ClosedDoorBehind'] ?? 0),
             'secondsInIsolation' => (int) ($fun['SecondsInIsolation'] ?? 0),
+
+            // New — clutches (1vN breakdown + per-match details)
+            'clutches'    => $this->buildClutches($clutchesBlob),
+
+            // New — weapon loadout (kills per weapon ID, summed across hitgroups)
+            'weaponKills' => $this->buildWeaponKills($weaponsBlob),
+        ];
+    }
+
+    /**
+     * Compresses scope.gg's clutches[playerId] block into something we can
+     * both aggregate across matches and render per-match in the UI.
+     *
+     * Output:
+     *   wonByCount  / lostByCount  : 5-element arrays keyed by enemy count (1..5)
+     *   t / ct                     : { won, lost } totals per side
+     *   detail                     : per-clutch records used by the match-detail page
+     */
+    private function buildClutches(?array $blob): array
+    {
+        $emptyByCount = [1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0];
+        $result = [
+            'wonByCount'  => $emptyByCount,
+            'lostByCount' => $emptyByCount,
+            't'           => ['won' => 0, 'lost' => 0],
+            'ct'          => ['won' => 0, 'lost' => 0],
+            'detail'      => [],
+        ];
+        if (!is_array($blob)) return $result;
+
+        foreach (['T', 'CT'] as $sideKey) {
+            $sideLc = strtolower($sideKey);
+            $sideData = $blob[$sideKey] ?? null;
+            if (!is_array($sideData)) continue;
+
+            foreach (['Won' => true, 'Lost' => false] as $resultKey => $isWin) {
+                $list = $sideData[$resultKey] ?? null;
+                if (!is_array($list)) continue;
+
+                foreach ($list as $clutch) {
+                    if (!is_array($clutch)) continue;
+                    $count = (int) ($clutch['EnemiesCount'] ?? count($clutch['Enemies'] ?? []));
+                    if ($count < 1) continue;
+                    if ($count > 5) $count = 5;
+
+                    if ($isWin) {
+                        $result['wonByCount'][$count]++;
+                        $result[$sideLc]['won']++;
+                    } else {
+                        $result['lostByCount'][$count]++;
+                        $result[$sideLc]['lost']++;
+                    }
+
+                    $enemies = [];
+                    foreach (($clutch['Enemies'] ?? []) as $e) {
+                        if (!is_array($e)) continue;
+                        $enemies[] = [
+                            'playerId'   => (string) ($e['PlayerID']   ?? ''),
+                            'mainWeapon' => (int) ($e['MainWeapon']    ?? 0),
+                            'hp'         => (int) ($e['HP']            ?? 0),
+                            'hasKit'     => (bool) ($e['HasDefuseKit'] ?? false),
+                        ];
+                    }
+
+                    $result['detail'][] = [
+                        'side'    => $sideLc,
+                        'won'     => $isWin,
+                        'count'   => $count,
+                        'round'   => (int) ($clutch['RoundIndexMatch'] ?? $clutch['RoundIndexDemo'] ?? 0),
+                        'frame'   => (int) ($clutch['FrameNumber']     ?? 0),
+                        'enemies' => $enemies,
+                    ];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Compresses scope.gg's weapons[playerId] block into per-weapon kill totals.
+     *
+     * Output:
+     *   general / t / ct : { weaponId(string) => totalKillsAcrossAllHitgroups }
+     *   classes          : { classId(string)  => totalKillsForThatClass } (rifle/pistol/sniper buckets)
+     *
+     * weaponId comes from DetailedStats.WeaponKills (specific weapon).
+     * classId comes from Kills (broad weapon class — used as fallback when an
+     * unknown weapon ID can't be name-resolved on the frontend).
+     */
+    private function buildWeaponKills(?array $blob): array
+    {
+        $extractDetailed = function (?array $side) {
+            $out = [];
+            $wk = $side['DetailedStats']['WeaponKills'] ?? null;
+            if (!is_array($wk)) return $out;
+            foreach ($wk as $wid => $hgMap) {
+                if (!is_array($hgMap)) continue;
+                $sum = 0;
+                foreach ($hgMap as $n) $sum += (int) $n;
+                if ($sum > 0) $out[(string) $wid] = $sum;
+            }
+            return $out;
+        };
+
+        $extractClasses = function (?array $side) {
+            $out = [];
+            $classes = $side['Kills'] ?? null;
+            if (!is_array($classes)) return $out;
+            foreach ($classes as $classId => $entry) {
+                if (!is_array($entry)) continue;
+                $overall = (int) ($entry['Overall'] ?? 0);
+                if ($overall > 0) $out[(string) $classId] = $overall;
+            }
+            return $out;
+        };
+
+        if (!is_array($blob)) {
+            return ['general' => [], 't' => [], 'ct' => [], 'classes' => []];
+        }
+
+        return [
+            'general' => $extractDetailed($blob['General'] ?? null),
+            't'       => $extractDetailed($blob['T']       ?? null),
+            'ct'      => $extractDetailed($blob['CT']      ?? null),
+            'classes' => $extractClasses($blob['General']  ?? null),
         ];
     }
 

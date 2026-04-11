@@ -56,7 +56,12 @@ class StatisticsCalculator {
                             'hltvRating' => [],
                             'kast' => [],
                             'openKills' => 0,
-                            'tradeKills' => 0
+                            'tradeKills' => 0,
+                            // New aggregates from clutches + weapons
+                            'clutchesWonByCount'  => [1=>0, 2=>0, 3=>0, 4=>0, 5=>0],
+                            'clutchesLostByCount' => [1=>0, 2=>0, 3=>0, 4=>0, 5=>0],
+                            'weaponKills'         => [], // weaponId => totalKills
+                            'weaponClassKills'    => [], // classId  => totalKills
                         ];
                     }
                     
@@ -88,6 +93,30 @@ class StatisticsCalculator {
                     $allPlayers[$key]['kast'][] = $player['kast'];
                     $allPlayers[$key]['openKills'] += $player['openKills'];
                     $allPlayers[$key]['tradeKills'] += $player['tradeKills'];
+
+                    // Aggregate clutches by enemy count (1..5).
+                    if (isset($player['clutches']) && is_array($player['clutches'])) {
+                        foreach ([1,2,3,4,5] as $cnt) {
+                            $allPlayers[$key]['clutchesWonByCount'][$cnt]
+                                += (int) ($player['clutches']['wonByCount'][$cnt] ?? 0);
+                            $allPlayers[$key]['clutchesLostByCount'][$cnt]
+                                += (int) ($player['clutches']['lostByCount'][$cnt] ?? 0);
+                        }
+                    }
+
+                    // Aggregate weapon kills (specific weapons + broad classes).
+                    if (isset($player['weaponKills']) && is_array($player['weaponKills'])) {
+                        foreach (($player['weaponKills']['general'] ?? []) as $wid => $n) {
+                            $wid = (string) $wid;
+                            $allPlayers[$key]['weaponKills'][$wid] =
+                                ($allPlayers[$key]['weaponKills'][$wid] ?? 0) + (int) $n;
+                        }
+                        foreach (($player['weaponKills']['classes'] ?? []) as $cid => $n) {
+                            $cid = (string) $cid;
+                            $allPlayers[$key]['weaponClassKills'][$cid] =
+                                ($allPlayers[$key]['weaponClassKills'][$cid] ?? 0) + (int) $n;
+                        }
+                    }
                 }
             }
         }
@@ -101,6 +130,27 @@ class StatisticsCalculator {
             
             $kd = $data['deaths'] > 0 ? $data['kills'] / $data['deaths'] : $data['kills'];
             
+            // Derive main weapon: highest-kill specific weapon ID; fall back to
+            // the dominant weapon class if specific IDs aren't available.
+            $weaponKills = $data['weaponKills'] ?? [];
+            $mainWeaponId = null;
+            $mainWeaponKills = 0;
+            foreach ($weaponKills as $wid => $n) {
+                if ($n > $mainWeaponKills) {
+                    $mainWeaponKills = $n;
+                    $mainWeaponId    = (string) $wid;
+                }
+            }
+            $weaponClassKills = $data['weaponClassKills'] ?? [];
+            $mainWeaponClass = null;
+            $mainClassKills = 0;
+            foreach ($weaponClassKills as $cid => $n) {
+                if ($n > $mainClassKills) {
+                    $mainClassKills  = $n;
+                    $mainWeaponClass = (int) $cid;
+                }
+            }
+
             $statistics[] = [
                 'name' => $data['name'], // Use the actual name from data, not the array key
                 'playerId' => $data['playerId'] ?? null,
@@ -116,7 +166,14 @@ class StatisticsCalculator {
                 'hltvRating' => round($avgHltvRating, 2),
                 'kast' => round($avgKast, 1),
                 'openKills' => $data['openKills'],
-                'tradeKills' => $data['tradeKills']
+                'tradeKills' => $data['tradeKills'],
+                // New fields shipped to the frontend
+                'clutchesWonByCount'  => array_values($data['clutchesWonByCount']),  // index 0 = 1v1
+                'clutchesLostByCount' => array_values($data['clutchesLostByCount']),
+                'weaponKills'         => (object) $weaponKills,
+                'mainWeaponId'        => $mainWeaponId,
+                'mainWeaponKills'     => $mainWeaponKills,
+                'mainWeaponClass'     => $mainWeaponClass,
             ];
         }
         
