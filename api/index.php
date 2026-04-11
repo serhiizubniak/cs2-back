@@ -67,6 +67,13 @@ try {
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 
+// Cacheable read endpoints — short TTL so updates show up quickly but the
+// browser/CDN can absorb repeat hits during navigation.
+$cacheableActions = ['get-matches', 'get-statistics', 'get-match-data', 'get-jokers'];
+if (in_array($action, $cacheableActions, true) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    header('Cache-Control: public, max-age=30, stale-while-revalidate=60');
+}
+
 try {
     switch ($action) {
         case 'get-statistics': {
@@ -102,11 +109,33 @@ try {
                 $statistics['players'][] = jokerPlayerRow($joker);
             }
 
+            // Note: we intentionally do NOT echo back the full $allMatches
+            // here. That used to inflate every response to ~400 KB just so
+            // the home page could compute "best player of last match". Use
+            // the dedicated /api/get-match-data?id=... for single-match
+            // detail when you need it.
             echo json_encode([
                 'success'    => true,
                 'statistics' => $statistics,
-                'matches'    => $allMatches,
                 'filter'     => ['from' => $from, 'to' => $to],
+            ]);
+            break;
+        }
+
+        case 'get-match-data': {
+            $id = $_GET['id'] ?? $_GET['matchId'] ?? '';
+            if ($id === '') {
+                fail(400, 'Match id is required');
+                break;
+            }
+            $cache = Db::getMatchData([$id]);
+            if (!isset($cache[$id])) {
+                fail(404, 'Match not found or has no parsed data');
+                break;
+            }
+            echo json_encode([
+                'success' => true,
+                'match'   => $cache[$id],
             ]);
             break;
         }
