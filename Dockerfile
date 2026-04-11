@@ -1,5 +1,11 @@
 FROM php:8.2-apache
 
+# Install Postgres client lib and PHP extension
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql \
+    && rm -rf /var/lib/apt/lists/*
+
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 

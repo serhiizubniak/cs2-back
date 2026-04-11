@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "bash -c 'mkdir -p ${DATA_DIR:-data} && chmod 755 ${DATA_DIR:-data} && php -S 0.0.0.0:$PORT router.php'",
+    "startCommand": "php -S 0.0.0.0:$PORT router.php",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
