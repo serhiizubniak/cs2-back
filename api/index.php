@@ -157,6 +157,17 @@ try {
                 break;
             }
 
+            // Serve cached parsed data when available — avoids a 20s scope.gg
+            // round-trip on every match-detail page load.
+            $cache = Db::getMatchData([$matchId]);
+            if (isset($cache[$matchId]) && !empty($cache[$matchId]['teams'])) {
+                echo json_encode([
+                    'success' => true,
+                    'match'   => $cache[$matchId],
+                ]);
+                break;
+            }
+
             set_time_limit(20);
             $matchData = $parser->parseMatch($matchId);
 
