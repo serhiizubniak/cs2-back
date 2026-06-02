@@ -168,7 +168,9 @@ try {
                 break;
             }
 
-            set_time_limit(20);
+            // FlareSolverr (Cloudflare bypass) is slow and can add a cold-start
+            // on top, so give the request plenty of headroom when it's in use.
+            set_time_limit(getenv('FLARESOLVERR_URL') ? 130 : 20);
             $matchData = $parser->parseMatch($matchId);
 
             if (!$matchData) {

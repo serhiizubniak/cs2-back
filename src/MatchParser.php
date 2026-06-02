@@ -62,6 +62,17 @@ class MatchParser
 
     private function fetch(string $url, string $matchId): ?string
     {
+        // scope.gg sits behind a Cloudflare interactive challenge that a plain
+        // cURL cannot pass. When FLARESOLVERR_URL is configured we route the
+        // request through FlareSolverr (self-hosted headless Chrome), which
+        // solves the challenge and returns the real HTML with __NEXT_DATA__
+        // intact. Without it we fall back to a direct fetch (works only for
+        // non-challenged pages / local dev).
+        $flareUrl = getenv('FLARESOLVERR_URL') ?: '';
+        if ($flareUrl !== '') {
+            return $this->fetchViaFlareSolverr($flareUrl, $url, $matchId);
+        }
+
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL            => $url,
@@ -101,6 +112,65 @@ class MatchParser
         }
 
         return $html;
+    }
+
+    /**
+     * Fetch through a FlareSolverr instance, which drives a real headless
+     * Chrome to pass the Cloudflare challenge and returns the solved HTML.
+     * FlareSolverr speaks a JSON API (POST /v1) rather than a plain URL.
+     */
+    private function fetchViaFlareSolverr(string $endpoint, string $url, string $matchId): ?string
+    {
+        $payload = json_encode([
+            'cmd'        => 'request.get',
+            'url'        => $url,
+            'maxTimeout' => 90000, // ms FlareSolverr waits to solve the challenge
+        ]);
+
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => $endpoint,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $payload,
+            CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 120, // room for Chrome cold start + solve
+            CURLOPT_CONNECTTIMEOUT => 10,
+        ]);
+
+        $resp      = curl_exec($ch);
+        $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curlError = curl_error($ch);
+        $curlErrno = curl_errno($ch);
+        if (function_exists('curl_close')) {
+            @curl_close($ch);
+        }
+
+        if ($curlErrno !== 0) {
+            error_log("FlareSolverr cURL error for match $matchId: $curlError (code: $curlErrno)");
+            return null;
+        }
+        if ($httpCode !== 200 || !$resp) {
+            error_log("FlareSolverr request failed for match $matchId: HTTP $httpCode");
+            return null;
+        }
+
+        $data = json_decode($resp, true);
+        $sol  = is_array($data) ? ($data['solution'] ?? null) : null;
+        if (($data['status'] ?? '') !== 'ok' || empty($sol['response'])) {
+            error_log("FlareSolverr no solution for match $matchId: " . substr($resp, 0, 200));
+            return null;
+        }
+
+        // FlareSolverr returns the rendered page; the Cloudflare challenge may
+        // have been served first, so guard against that leaking through.
+        $solvedHttp = (int) ($sol['status'] ?? 0);
+        if ($solvedHttp !== 200) {
+            error_log("FlareSolverr solved page non-200 for match $matchId: $solvedHttp");
+            return null;
+        }
+
+        return $sol['response'];
     }
 
     private function extractNextData(string $html): ?array
