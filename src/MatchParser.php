@@ -23,13 +23,15 @@ class MatchParser
         if ($urlOrId === '') {
             return null;
         }
-        if (ctype_digit($urlOrId)) {
+        // Match IDs are signed 64-bit ints, so they can be negative
+        // (scope.gg now serves URLs like /matches/-7688518421519457510/...).
+        if (preg_match('/^-?\d+$/', $urlOrId)) {
             return $urlOrId;
         }
-        if (preg_match('~/matches/(\d+)~', $urlOrId, $m)) {
+        if (preg_match('~/matches/(-?\d+)~', $urlOrId, $m)) {
             return $m[1];
         }
-        if (preg_match('~^\d+~', $urlOrId, $m)) {
+        if (preg_match('~^-?\d+~', $urlOrId, $m)) {
             return $m[0];
         }
         return null;
