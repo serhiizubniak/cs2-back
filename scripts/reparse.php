@@ -23,12 +23,8 @@ try {
 
 $filterIds = array_slice($argv, 1);
 
-$rows   = Db::pdo()->query('SELECT id, url FROM matches ORDER BY added_at ASC')->fetchAll();
-$urlById = [];
-foreach ($rows as $r) {
-    $urlById[$r['id']] = $r['url'] ?? null;
-}
-$ids = array_map(fn($r) => $r['id'], $rows);
+$rows = Db::pdo()->query('SELECT id FROM matches ORDER BY added_at ASC')->fetchAll();
+$ids  = array_map(fn($r) => $r['id'], $rows);
 if ($filterIds) {
     $set = array_flip($filterIds);
     $ids = array_values(array_filter($ids, fn($id) => isset($set[$id])));
@@ -44,9 +40,7 @@ echo "== Re-parsing $total matches ==\n";
 foreach ($ids as $i => $id) {
     $n = $i + 1;
     try {
-        // Pass the stored source URL so negative match IDs (which need the
-        // account segment) re-parse correctly, not just the bare id.
-        $parsed = $parser->parseMatch($id, $parser->extractMatchPathFromUrl((string) ($urlById[$id] ?? $id)));
+        $parsed = $parser->parseMatch($id);
     } catch (Throwable $e) {
         $fail++;
         echo "[$n/$total] FAIL $id (exception: " . $e->getMessage() . ")\n";
