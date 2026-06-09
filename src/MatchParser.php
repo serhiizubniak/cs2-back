@@ -37,10 +37,41 @@ class MatchParser
         return null;
     }
 
-    public function parseMatch(string $matchId): ?array
+    /**
+     * Returns the full path scope.gg needs to render the match, i.e. everything
+     * after /matches/ — typically "<matchId>/<accountId>". The account segment
+     * matters for the newer Valve-int64 (negative) match IDs: scope.gg can't
+     * resolve those from the match ID alone, so fetching "/matches/<id>" without
+     * the account perspective returns no match. Older scope.gg-internal IDs work
+     * with or without it. Returns null when no match path can be found.
+     */
+    public function extractMatchPathFromUrl(string $urlOrId): ?string
+    {
+        $clean = preg_replace('/[?#].*$/', '', trim($urlOrId));
+        if ($clean === '') {
+            return null;
+        }
+        if (preg_match('~/matches/(-?\d+(?:/\d+)*)~', $clean, $m)) {
+            return $m[1];
+        }
+        if (preg_match('~^-?\d+(?:/\d+)*$~', $clean)) {
+            return $clean;
+        }
+        return null;
+    }
+
+    /**
+     * $sourcePath (optional) is the full "<matchId>/<accountId>" path used to
+     * build the scope.gg URL. When omitted we fall back to the bare match ID,
+     * which is enough for older scope.gg-internal match IDs.
+     */
+    public function parseMatch(string $matchId, ?string $sourcePath = null): ?array
     {
         $matchId = preg_replace('/[?&].*$/', '', trim($matchId));
-        $url = $this->baseUrl . $matchId;
+        $path = $sourcePath !== null && trim($sourcePath) !== ''
+            ? preg_replace('/[?#].*$/', '', trim($sourcePath))
+            : $matchId;
+        $url = $this->baseUrl . $path;
 
         $html = $this->fetch($url, $matchId);
         if ($html === null) {
