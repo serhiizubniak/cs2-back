@@ -16,7 +16,7 @@ CREATE INDEX IF NOT EXISTS matches_match_time_idx ON matches (match_time DESC);
 CREATE TABLE IF NOT EXISTS jokers (
     id         TEXT PRIMARY KEY,
     name       TEXT NOT NULL,
-    rating     NUMERIC(3,1) NOT NULL CHECK (rating >= 0 AND rating <= 5),
+    rating     NUMERIC(3,2) NOT NULL CHECK (rating >= 0 AND rating <= 5),
     avatar     TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );

@@ -67,6 +67,17 @@ try {
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 
+// Fallback: derive the action from the URL path (e.g. /api/create-teams).
+// router.php does this for the php -S server (prod), but Apache (local Docker)
+// rewrites to index.php without populating it, so recover it here too.
+if ($action === '') {
+    $reqPath = strtok((string) (parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: ''), '?');
+    $parts   = explode('/', trim($reqPath, '/'));
+    if (count($parts) >= 2 && $parts[0] === 'api') {
+        $action = $parts[1];
+    }
+}
+
 // Cacheable read endpoints — short TTL so updates show up quickly but the
 // browser/CDN can absorb repeat hits during navigation.
 $cacheableActions = ['get-matches', 'get-statistics', 'get-match-data', 'get-jokers'];
@@ -170,7 +181,8 @@ try {
 
             // FlareSolverr (Cloudflare bypass) is slow and can add a cold-start
             // on top, so give the request plenty of headroom when it's in use.
-            set_time_limit(getenv('FLARESOLVERR_URL') ? 130 : 20);
+            // Two FlareSolverr attempts at up to 150s each, plus parsing slack.
+            set_time_limit(getenv('FLARESOLVERR_URL') ? 320 : 20);
             $matchData = $parser->parseMatch($matchId);
 
             if (!$matchData) {

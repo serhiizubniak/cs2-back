@@ -123,20 +123,60 @@ class MatchParser
      */
     private function fetchViaFlareSolverr(string $endpoint, string $url, string $matchId): ?string
     {
+        // Cloudflare occasionally serves a heavier challenge that misses the
+        // first window; a single retry almost always gets through.
+        $resp = $this->flareSolverrRequest($endpoint, $url, $matchId)
+             ?? $this->flareSolverrRequest($endpoint, $url, $matchId . ' (retry)');
+        if ($resp === null) {
+            return null;
+        }
+
+        $data = json_decode($resp, true);
+        $sol  = is_array($data) ? ($data['solution'] ?? null) : null;
+        if (($data['status'] ?? '') !== 'ok' || empty($sol['response'])) {
+            error_log("FlareSolverr no solution for match $matchId: " . substr($resp, 0, 200));
+            return null;
+        }
+
+        // FlareSolverr returns the rendered page; the Cloudflare challenge may
+        // have been served first, so guard against that leaking through.
+        $solvedHttp = (int) ($sol['status'] ?? 0);
+        if ($solvedHttp !== 200) {
+            error_log("FlareSolverr solved page non-200 for match $matchId: $solvedHttp");
+            return null;
+        }
+
+        return $sol['response'];
+    }
+
+    /**
+     * One POST /v1 round-trip to FlareSolverr. Returns the raw JSON body on
+     * HTTP 200, null on any transport error (logged) so the caller can retry.
+     */
+    private function flareSolverrRequest(string $endpoint, string $url, string $matchId): ?string
+    {
         $payload = json_encode([
             'cmd'        => 'request.get',
             'url'        => $url,
-            'maxTimeout' => 90000, // ms FlareSolverr waits to solve the challenge
+            'maxTimeout' => 120000, // ms FlareSolverr waits to solve the challenge
         ]);
+
+        $headers = ['Content-Type: application/json'];
+        // A private Hugging Face Space fronts the solver with auth; pass the
+        // token through when one is configured.
+        $token = getenv('FLARESOLVERR_TOKEN') ?: '';
+        if ($token !== '') {
+            $headers[] = 'Authorization: Bearer ' . $token;
+        }
 
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL            => $endpoint,
             CURLOPT_POST           => true,
             CURLOPT_POSTFIELDS     => $payload,
-            CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+            CURLOPT_HTTPHEADER     => $headers,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT        => 120, // room for Chrome cold start + solve
+            CURLOPT_TIMEOUT        => 150, // room for Chrome cold start + solve
             CURLOPT_CONNECTTIMEOUT => 10,
         ]);
 
@@ -157,22 +197,7 @@ class MatchParser
             return null;
         }
 
-        $data = json_decode($resp, true);
-        $sol  = is_array($data) ? ($data['solution'] ?? null) : null;
-        if (($data['status'] ?? '') !== 'ok' || empty($sol['response'])) {
-            error_log("FlareSolverr no solution for match $matchId: " . substr($resp, 0, 200));
-            return null;
-        }
-
-        // FlareSolverr returns the rendered page; the Cloudflare challenge may
-        // have been served first, so guard against that leaking through.
-        $solvedHttp = (int) ($sol['status'] ?? 0);
-        if ($solvedHttp !== 200) {
-            error_log("FlareSolverr solved page non-200 for match $matchId: $solvedHttp");
-            return null;
-        }
-
-        return $sol['response'];
+        return $resp;
     }
 
     private function extractNextData(string $html): ?array
