@@ -48,6 +48,88 @@ function countTotalPlayers(array $teams): int {
     return $count;
 }
 
+/** Active map pool for the map vote on the team page. */
+const MAP_POOL = [
+    'de_dust2', 'de_mirage', 'de_inferno', 'de_nuke',
+    'de_overpass', 'de_ancient', 'de_anubis', 'de_cache',
+];
+
+/**
+ * Collects the identity keys of every player in a team composition —
+ * playerId when present, otherwise the name. Used to verify that a map
+ * vote comes from someone who is actually on one of the two teams.
+ */
+function teamVoterKeys(array $composition): array {
+    $keys = [];
+    foreach (['team1', 'team2'] as $side) {
+        foreach (($composition['teams'][$side] ?? []) as $player) {
+            $key = $player['playerId'] ?? null;
+            if ($key === null || $key === '') {
+                $key = $player['name'] ?? null;
+            }
+            if ($key !== null && $key !== '') {
+                $keys[] = (string) $key;
+            }
+        }
+    }
+    return $keys;
+}
+
+/** Voter key of a single player row — playerId when present, else name. */
+function playerKey(array $player): string {
+    $key = $player['playerId'] ?? null;
+    if ($key === null || $key === '') {
+        $key = $player['name'] ?? '';
+    }
+    return (string) $key;
+}
+
+/**
+ * Recomputes team rating aggregates from the rosters themselves. Used after
+ * manual roster edits so the displayed balance always matches the players
+ * actually on each side.
+ */
+function recalcTeamRatings(array $teams): array {
+    foreach (['team1', 'team2'] as $side) {
+        $players = $teams[$side] ?? [];
+        $total   = 0.0;
+        foreach ($players as $p) {
+            $total += (float) ($p['hltvRating'] ?? 0);
+        }
+        $teams[$side . 'Rating']    = $total;
+        $teams[$side . 'AvgRating'] = count($players) > 0 ? $total / count($players) : 0.0;
+    }
+    $teams['ratingDifference']    = abs($teams['team1Rating'] - $teams['team2Rating']);
+    $teams['avgRatingDifference'] = abs($teams['team1AvgRating'] - $teams['team2AvgRating']);
+    return $teams;
+}
+
+/** Max maps a single player can vote for. */
+const MAX_MAP_VOTES = 3;
+
+/**
+ * The maps one voter picked. Supports both the current shape
+ * (['maps' => [...]]) and the legacy single-map shape (['map' => ...]).
+ */
+function voterMaps(array $vote): array {
+    if (isset($vote['maps']) && is_array($vote['maps'])) {
+        return $vote['maps'];
+    }
+    return isset($vote['map']) ? [$vote['map']] : [];
+}
+
+/** Tallies mapVotes into ['de_mirage' => 3, ...] sorted descending. */
+function tallyMapVotes(array $composition): array {
+    $tally = [];
+    foreach (($composition['mapVotes'] ?? []) as $vote) {
+        foreach (voterMaps((array) $vote) as $map) {
+            $tally[$map] = ($tally[$map] ?? 0) + 1;
+        }
+    }
+    arsort($tally);
+    return $tally;
+}
+
 function normalizeDate($value): ?string {
     if ($value === null || $value === '') return null;
     $value = (string) $value;
@@ -80,7 +162,11 @@ if ($action === '') {
 
 // Cacheable read endpoints — short TTL so updates show up quickly but the
 // browser/CDN can absorb repeat hits during navigation.
-$cacheableActions = ['get-matches', 'get-statistics', 'get-match-data', 'get-jokers'];
+// NOTE: get-statistics and get-jokers are intentionally NOT cached — jokers
+// are embedded in both responses, and the HTTP cache made freshly created or
+// deleted jokers invisible until the TTL expired. React-query already caches
+// these client-side (staleTime), so the HTTP layer was redundant anyway.
+$cacheableActions = ['get-matches', 'get-match-data'];
 if (in_array($action, $cacheableActions, true) && $_SERVER['REQUEST_METHOD'] === 'GET') {
     header('Cache-Control: public, max-age=30, stale-while-revalidate=60');
 }
@@ -373,6 +459,130 @@ try {
             echo json_encode([
                 'success' => true,
                 'team'    => $team,
+            ]);
+            break;
+        }
+
+        case 'vote-map': {
+            $input   = json_decode(file_get_contents('php://input'), true) ?: [];
+            $teamId  = $input['teamId']  ?? $_POST['teamId']  ?? '';
+            $voterId = $input['voterId'] ?? $_POST['voterId'] ?? '';
+
+            // The voter's full selection (up to MAX_MAP_VOTES maps). The
+            // legacy single 'map' param is still accepted as a 1-element list.
+            $maps = $input['maps'] ?? null;
+            if (!is_array($maps)) {
+                $legacy = $input['map'] ?? $_POST['map'] ?? '';
+                $maps   = $legacy === '' ? [] : [$legacy];
+            }
+            $maps = array_values(array_unique(array_filter(array_map('strval', $maps))));
+
+            if (empty($teamId) || empty($voterId)) {
+                fail(400, 'teamId and voterId are required');
+                break;
+            }
+            if (count($maps) > MAX_MAP_VOTES) {
+                fail(400, 'You can vote for at most ' . MAX_MAP_VOTES . ' maps');
+                break;
+            }
+            foreach ($maps as $map) {
+                if (!in_array($map, MAP_POOL, true)) {
+                    fail(400, 'Unknown map: ' . $map, ['allowed' => MAP_POOL]);
+                    break 2;
+                }
+            }
+
+            try {
+                $result = Db::mutateTeam($teamId, function (array $composition) use ($voterId, $maps) {
+                if (!in_array((string) $voterId, teamVoterKeys($composition), true)) {
+                    throw new InvalidArgumentException('Voter is not part of this team');
+                }
+                $votes = $composition['mapVotes'] ?? [];
+                if (empty($maps)) {
+                    unset($votes[$voterId]);
+                } else {
+                    $votes[$voterId] = ['maps' => $maps, 'votedAt' => date('c')];
+                }
+                // Keep JSON object shape even when the last vote is retracted.
+                $composition['mapVotes'] = $votes ?: new stdClass();
+                return $composition;
+                });
+            } catch (InvalidArgumentException $e) {
+                fail(403, $e->getMessage());
+                break;
+            }
+
+            if ($result === null) {
+                fail(404, 'Team not found');
+                break;
+            }
+
+            echo json_encode([
+                'success'  => true,
+                'team'     => $result,
+                'tally'    => tallyMapVotes($result),
+                'mapPool'  => MAP_POOL,
+            ]);
+            break;
+        }
+
+        case 'swap-players': {
+            $input   = json_decode(file_get_contents('php://input'), true) ?: [];
+            $teamId  = $input['teamId']  ?? '';
+            $playerA = $input['playerA'] ?? ''; // key of a player on team 1
+            $playerB = $input['playerB'] ?? ''; // key of a player on team 2
+
+            if (empty($teamId) || empty($playerA) || empty($playerB)) {
+                fail(400, 'teamId, playerA and playerB are required');
+                break;
+            }
+
+            try {
+                $result = Db::mutateTeam($teamId, function (array $composition) use ($playerA, $playerB) {
+                    $teams = $composition['teams'] ?? null;
+                    if (!is_array($teams)) {
+                        throw new InvalidArgumentException('Team has no rosters');
+                    }
+
+                    // Locate each player on either side — the swap is
+                    // direction-agnostic so the UI can pass them in any order.
+                    $find = function (array $players, string $key): ?int {
+                        foreach ($players as $i => $p) {
+                            if (playerKey($p) === $key) return $i;
+                        }
+                        return null;
+                    };
+
+                    $a1 = $find($teams['team1'] ?? [], $playerA);
+                    $a2 = $find($teams['team2'] ?? [], $playerA);
+                    $b1 = $find($teams['team1'] ?? [], $playerB);
+                    $b2 = $find($teams['team2'] ?? [], $playerB);
+
+                    if ($a1 !== null && $b2 !== null) {
+                        [$teams['team1'][$a1], $teams['team2'][$b2]] = [$teams['team2'][$b2], $teams['team1'][$a1]];
+                    } elseif ($a2 !== null && $b1 !== null) {
+                        [$teams['team2'][$a2], $teams['team1'][$b1]] = [$teams['team1'][$b1], $teams['team2'][$a2]];
+                    } else {
+                        throw new InvalidArgumentException('Players must be on opposite teams');
+                    }
+
+                    $composition['teams'] = recalcTeamRatings($teams);
+                    $composition['editedAt'] = date('c');
+                    return $composition;
+                });
+            } catch (InvalidArgumentException $e) {
+                fail(400, $e->getMessage());
+                break;
+            }
+
+            if ($result === null) {
+                fail(404, 'Team not found');
+                break;
+            }
+
+            echo json_encode([
+                'success' => true,
+                'team'    => $result,
             ]);
             break;
         }

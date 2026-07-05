@@ -271,6 +271,33 @@ class Db {
         ]);
     }
 
+    /**
+     * Atomically mutate a team's composition JSON under a row lock.
+     * $mutator receives the decoded composition array and must return the
+     * updated composition array. Returns the merged team (like getTeam) or
+     * null when the team does not exist.
+     */
+    public static function mutateTeam(string $id, callable $mutator): ?array {
+        return self::transaction(function (PDO $pdo) use ($id, $mutator) {
+            $stmt = $pdo->prepare('SELECT composition, created_at FROM teams WHERE id = ? FOR UPDATE');
+            $stmt->execute([$id]);
+            $row = $stmt->fetch();
+            if (!$row) {
+                return null;
+            }
+            $composition = json_decode($row['composition'], true);
+            $composition = $mutator(is_array($composition) ? $composition : []);
+
+            $update = $pdo->prepare('UPDATE teams SET composition = ?::jsonb WHERE id = ?');
+            $update->execute([json_encode($composition, JSON_UNESCAPED_UNICODE), $id]);
+
+            return array_merge($composition, [
+                'id'        => $id,
+                'createdAt' => self::toIso8601($row['created_at']),
+            ]);
+        });
+    }
+
     public static function getTeam(string $id): ?array {
         $stmt = self::pdo()->prepare('SELECT id, composition, created_at FROM teams WHERE id = ?');
         $stmt->execute([$id]);
