@@ -104,30 +104,124 @@ function recalcTeamRatings(array $teams): array {
     return $teams;
 }
 
-/** Max maps a single player can vote for. */
-const MAX_MAP_VOTES = 3;
+/** Map-vote limits: every player gets 2 picks (+1 each) and 1 ban (−1). */
+const MAX_MAP_PICKS = 2;
 
 /**
- * The maps one voter picked. Supports both the current shape
- * (['maps' => [...]]) and the legacy single-map shape (['map' => ...]).
+ * Players allowed to close/reopen the map vote. Trust-based like the rest
+ * of the app, but the stop button only works for these two. Matched by
+ * scope.gg playerId first, by roster name as a fallback.
  */
-function voterMaps(array $vote): array {
-    if (isset($vote['maps']) && is_array($vote['maps'])) {
-        return $vote['maps'];
+const MAP_VOTE_ADMIN_IDS   = ['190077542', '192104407']; // Василь Стус, Orion
+const MAP_VOTE_ADMIN_NAMES = ['Василь Стус', 'Orion'];
+
+/**
+ * One voter's ballot: ['picks' => string[], 'ban' => ?string].
+ * Legacy shapes (['maps' => [...]] multi-vote and ['map' => ...] single)
+ * are read as picks capped at MAX_MAP_PICKS, with no ban.
+ */
+function voterBallot(array $vote): array {
+    if (isset($vote['picks']) || array_key_exists('ban', $vote)) {
+        $picks = is_array($vote['picks'] ?? null) ? $vote['picks'] : [];
+        $ban   = $vote['ban'] ?? null;
+        return [
+            'picks' => array_slice(array_values($picks), 0, MAX_MAP_PICKS),
+            'ban'   => (is_string($ban) && $ban !== '') ? $ban : null,
+        ];
     }
-    return isset($vote['map']) ? [$vote['map']] : [];
+    $legacy = isset($vote['maps']) && is_array($vote['maps'])
+        ? $vote['maps']
+        : (isset($vote['map']) ? [$vote['map']] : []);
+    return ['picks' => array_slice(array_values($legacy), 0, MAX_MAP_PICKS), 'ban' => null];
 }
 
-/** Tallies mapVotes into ['de_mirage' => 3, ...] sorted descending. */
-function tallyMapVotes(array $composition): array {
-    $tally = [];
+/**
+ * Per-map score sheet over the whole pool: picks, bans, score = picks − bans.
+ * Ordered by score desc, then fewer bans first (the deterministic part of
+ * the ranking — random tie-breaks only happen once, at close time).
+ */
+function mapVoteScores(array $composition): array {
+    $sheet = [];
+    foreach (MAP_POOL as $map) {
+        $sheet[$map] = ['map' => $map, 'picks' => 0, 'bans' => 0, 'score' => 0];
+    }
     foreach (($composition['mapVotes'] ?? []) as $vote) {
-        foreach (voterMaps((array) $vote) as $map) {
-            $tally[$map] = ($tally[$map] ?? 0) + 1;
+        $ballot = voterBallot((array) $vote);
+        foreach ($ballot['picks'] as $map) {
+            if (isset($sheet[$map])) {
+                $sheet[$map]['picks']++;
+                $sheet[$map]['score']++;
+            }
+        }
+        $ban = $ballot['ban'];
+        if ($ban !== null && isset($sheet[$ban])) {
+            $sheet[$ban]['bans']++;
+            $sheet[$ban]['score']--;
         }
     }
-    arsort($tally);
-    return $tally;
+    $rows = array_values($sheet);
+    usort($rows, fn ($a, $b) => [$b['score'], $a['bans']] <=> [$a['score'], $b['bans']]);
+    return $rows;
+}
+
+/** Whether this roster member may close/reopen the map vote. */
+function isMapVoteAdmin(array $composition, string $voterId): bool {
+    if (in_array($voterId, MAP_VOTE_ADMIN_IDS, true)) {
+        return true;
+    }
+    foreach (['team1', 'team2'] as $side) {
+        foreach (($composition['teams'][$side] ?? []) as $player) {
+            if (playerKey((array) $player) === $voterId) {
+                return in_array($player['name'] ?? '', MAP_VOTE_ADMIN_NAMES, true);
+            }
+        }
+    }
+    return false;
+}
+
+/** Display name of a roster member by voter key (falls back to the key). */
+function rosterPlayerName(array $composition, string $voterId): string {
+    foreach (['team1', 'team2'] as $side) {
+        foreach (($composition['teams'][$side] ?? []) as $player) {
+            if (playerKey((array) $player) === $voterId) {
+                return (string) ($player['name'] ?? $voterId);
+            }
+        }
+    }
+    return $voterId;
+}
+
+/**
+ * Decides the night's three maps from the closed ballot box:
+ *   maps 1–2 — best score (ties: fewer bans, then coin flip),
+ *   map 3    — random among the rest with score ≥ 0 (a net-negative map is
+ *              one the group actively dislikes and must not slip in by
+ *              luck); if nothing non-negative remains, random among all.
+ * Called exactly once, when an admin closes the vote — the random rolls
+ * are frozen into the stored result.
+ */
+function decideMapVote(array $composition): array {
+    $rows = mapVoteScores($composition);
+    // Random tie-break: shuffle, then stable-sort by (score desc, bans asc)
+    // so equal rows keep their shuffled order.
+    shuffle($rows);
+    usort($rows, fn ($a, $b) => [$b['score'], $a['bans']] <=> [$a['score'], $b['bans']]);
+
+    $picked = [$rows[0]['map'], $rows[1]['map']];
+    $rest   = array_slice($rows, 2);
+    $pool   = array_values(array_filter($rest, fn ($r) => $r['score'] >= 0));
+    if (empty($pool)) {
+        $pool = $rest;
+    }
+    $random = $pool[array_rand($pool)]['map'];
+
+    return [
+        'picked'     => $picked,
+        'random'     => $random,
+        'maps'       => array_merge($picked, [$random]),
+        'scores'     => $rows,
+        'randomPool' => array_map(fn ($r) => $r['map'], $pool),
+    ];
 }
 
 function normalizeDate($value): ?string {
@@ -468,24 +562,29 @@ try {
             $teamId  = $input['teamId']  ?? $_POST['teamId']  ?? '';
             $voterId = $input['voterId'] ?? $_POST['voterId'] ?? '';
 
-            // The voter's full selection (up to MAX_MAP_VOTES maps). The
-            // legacy single 'map' param is still accepted as a 1-element list.
-            $maps = $input['maps'] ?? null;
-            if (!is_array($maps)) {
-                $legacy = $input['map'] ?? $_POST['map'] ?? '';
-                $maps   = $legacy === '' ? [] : [$legacy];
+            // The voter's ballot: up to MAX_MAP_PICKS picks and one optional
+            // ban. Legacy 'maps'/'map' payloads are accepted as picks.
+            $picks = $input['picks'] ?? null;
+            if (!is_array($picks)) {
+                $picks = $input['maps'] ?? null;
             }
-            $maps = array_values(array_unique(array_filter(array_map('strval', $maps))));
+            if (!is_array($picks)) {
+                $legacy = $input['map'] ?? $_POST['map'] ?? '';
+                $picks  = $legacy === '' ? [] : [$legacy];
+            }
+            $picks = array_values(array_unique(array_filter(array_map('strval', $picks))));
+            $ban   = $input['ban'] ?? null;
+            $ban   = (is_string($ban) && $ban !== '') ? $ban : null;
 
             if (empty($teamId) || empty($voterId)) {
                 fail(400, 'teamId and voterId are required');
                 break;
             }
-            if (count($maps) > MAX_MAP_VOTES) {
-                fail(400, 'You can vote for at most ' . MAX_MAP_VOTES . ' maps');
+            if (count($picks) > MAX_MAP_PICKS) {
+                fail(400, 'You can pick at most ' . MAX_MAP_PICKS . ' maps');
                 break;
             }
-            foreach ($maps as $map) {
+            foreach (array_merge($picks, $ban !== null ? [$ban] : []) as $map) {
                 if (!in_array($map, MAP_POOL, true)) {
                     fail(400, 'Unknown map: ' . $map, ['allowed' => MAP_POOL]);
                     break 2;
@@ -493,22 +592,28 @@ try {
             }
 
             try {
-                $result = Db::mutateTeam($teamId, function (array $composition) use ($voterId, $maps) {
-                if (!in_array((string) $voterId, teamVoterKeys($composition), true)) {
-                    throw new InvalidArgumentException('Voter is not part of this team');
-                }
-                $votes = $composition['mapVotes'] ?? [];
-                if (empty($maps)) {
-                    unset($votes[$voterId]);
-                } else {
-                    $votes[$voterId] = ['maps' => $maps, 'votedAt' => date('c')];
-                }
-                // Keep JSON object shape even when the last vote is retracted.
-                $composition['mapVotes'] = $votes ?: new stdClass();
-                return $composition;
+                $result = Db::mutateTeam($teamId, function (array $composition) use ($voterId, $picks, $ban) {
+                    if (!in_array((string) $voterId, teamVoterKeys($composition), true)) {
+                        throw new InvalidArgumentException('Voter is not part of this team');
+                    }
+                    if (!empty($composition['mapVoting']['closedAt'])) {
+                        throw new RuntimeException('Voting is closed');
+                    }
+                    $votes = $composition['mapVotes'] ?? [];
+                    if (empty($picks) && $ban === null) {
+                        unset($votes[$voterId]);
+                    } else {
+                        $votes[$voterId] = ['picks' => $picks, 'ban' => $ban, 'votedAt' => date('c')];
+                    }
+                    // Keep JSON object shape even when the last vote is retracted.
+                    $composition['mapVotes'] = $votes ?: new stdClass();
+                    return $composition;
                 });
             } catch (InvalidArgumentException $e) {
                 fail(403, $e->getMessage());
+                break;
+            } catch (RuntimeException $e) {
+                fail(409, $e->getMessage());
                 break;
             }
 
@@ -520,8 +625,63 @@ try {
             echo json_encode([
                 'success'  => true,
                 'team'     => $result,
-                'tally'    => tallyMapVotes($result),
+                'scores'   => mapVoteScores($result),
                 'mapPool'  => MAP_POOL,
+            ]);
+            break;
+        }
+
+        case 'close-map-vote':
+        case 'reopen-map-vote': {
+            $input   = json_decode(file_get_contents('php://input'), true) ?: [];
+            $teamId  = $input['teamId']  ?? '';
+            $voterId = $input['voterId'] ?? '';
+
+            if (empty($teamId) || empty($voterId)) {
+                fail(400, 'teamId and voterId are required');
+                break;
+            }
+
+            $closing = $action === 'close-map-vote';
+            try {
+                $result = Db::mutateTeam($teamId, function (array $composition) use ($voterId, $closing) {
+                    if (!in_array((string) $voterId, teamVoterKeys($composition), true)) {
+                        throw new InvalidArgumentException('Voter is not part of this team');
+                    }
+                    if (!isMapVoteAdmin($composition, (string) $voterId)) {
+                        throw new InvalidArgumentException('Only a vote admin can do this');
+                    }
+                    if ($closing) {
+                        if (!empty($composition['mapVoting']['closedAt'])) {
+                            throw new RuntimeException('Voting is already closed');
+                        }
+                        $composition['mapVoting'] = [
+                            'closedAt' => date('c'),
+                            'closedBy' => rosterPlayerName($composition, (string) $voterId),
+                            'result'   => decideMapVote($composition),
+                        ];
+                    } else {
+                        unset($composition['mapVoting']);
+                    }
+                    return $composition;
+                });
+            } catch (InvalidArgumentException $e) {
+                fail(403, $e->getMessage());
+                break;
+            } catch (RuntimeException $e) {
+                fail(409, $e->getMessage());
+                break;
+            }
+
+            if ($result === null) {
+                fail(404, 'Team not found');
+                break;
+            }
+
+            echo json_encode([
+                'success' => true,
+                'team'    => $result,
+                'scores'  => mapVoteScores($result),
             ]);
             break;
         }
