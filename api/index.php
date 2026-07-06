@@ -194,9 +194,11 @@ function rosterPlayerName(array $composition, string $voterId): string {
 /**
  * Decides the night's three maps from the closed ballot box:
  *   maps 1–2 — best score (ties: fewer bans, then coin flip),
- *   map 3    — random among the rest with score ≥ 0 (a net-negative map is
- *              one the group actively dislikes and must not slip in by
- *              luck); if nothing non-negative remains, random among all.
+ *   map 3    — the most-banned remaining map is knocked out (ties: worst
+ *              score, then coin flip; nobody banned → nothing knocked out),
+ *              then a weighted random over the rest where
+ *              weight = score − min(score) + 1, so popular maps are
+ *              proportionally likelier but every survivor keeps a chance.
  * Called exactly once, when an admin closes the vote — the random rolls
  * are frozen into the stored result.
  */
@@ -209,18 +211,44 @@ function decideMapVote(array $composition): array {
 
     $picked = [$rows[0]['map'], $rows[1]['map']];
     $rest   = array_slice($rows, 2);
-    $pool   = array_values(array_filter($rest, fn ($r) => $r['score'] >= 0));
-    if (empty($pool)) {
-        $pool = $rest;
+
+    // Knock out the most-banned remaining map. $rest is sorted best-first,
+    // so walking it in reverse finds the worst-scored among the most-banned.
+    $banned  = null;
+    $maxBans = max(array_column($rest, 'bans'));
+    if ($maxBans > 0) {
+        foreach (array_reverse($rest) as $row) {
+            if ($row['bans'] === $maxBans) {
+                $banned = $row['map'];
+                break;
+            }
+        }
     }
-    $random = $pool[array_rand($pool)]['map'];
+    $pool = array_values(array_filter($rest, fn ($r) => $r['map'] !== $banned));
+
+    $minScore = min(array_column($pool, 'score'));
+    $weighted = array_map(fn ($r) => [
+        'map'    => $r['map'],
+        'weight' => $r['score'] - $minScore + 1,
+    ], $pool);
+
+    $roll   = mt_rand(1, array_sum(array_column($weighted, 'weight')));
+    $random = $weighted[0]['map'];
+    foreach ($weighted as $entry) {
+        $roll -= $entry['weight'];
+        if ($roll <= 0) {
+            $random = $entry['map'];
+            break;
+        }
+    }
 
     return [
         'picked'     => $picked,
         'random'     => $random,
+        'banned'     => $banned,
         'maps'       => array_merge($picked, [$random]),
         'scores'     => $rows,
-        'randomPool' => array_map(fn ($r) => $r['map'], $pool),
+        'randomPool' => $weighted,
     ];
 }
 
