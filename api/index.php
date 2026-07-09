@@ -13,6 +13,7 @@ require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/MatchParser.php';
 require_once __DIR__ . '/../src/StatisticsCalculator.php';
 require_once __DIR__ . '/../src/TeamBalancer.php';
+require_once __DIR__ . '/../src/Draft.php';
 
 function fail(int $code, string $error, array $extra = []): void {
     http_response_code($code);
@@ -563,6 +564,154 @@ try {
                 'success' => true,
                 'teams'   => $improvedTeams,
                 'teamId'  => $teamId,
+            ]);
+            break;
+        }
+
+        case 'create-draft': {
+            // Same 10-player selection as create-teams, but instead of
+            // auto-balancing we seed a live captains draft: two random
+            // captains, the other eight in the pool, snake pick order.
+            $input      = json_decode(file_get_contents('php://input'), true) ?: [];
+            $playerIds  = $input['playerIds'] ?? $_POST['playerIds'] ?? [];
+            $matchIds   = $input['matchIds']  ?? $_GET['match_ids']  ?? $_POST['matchIds']  ?? '';
+            $dateFilter = is_array($input['dateFilter'] ?? null) ? $input['dateFilter'] : null;
+
+            if (empty($playerIds) || !is_array($playerIds) || count($playerIds) !== 10) {
+                fail(400, 'Exactly 10 player IDs are required');
+                break;
+            }
+
+            $matchIdsArray = is_array($matchIds)
+                ? $matchIds
+                : ($matchIds ? array_values(array_filter(array_map('trim', explode(',', $matchIds)))) : []);
+
+            if (empty($matchIdsArray)) {
+                fail(400, 'No matches provided. Please load statistics first.');
+                break;
+            }
+
+            $cache      = Db::getMatchData($matchIdsArray);
+            $allMatches = array_values($cache);
+
+            if (empty($allMatches)) {
+                fail(400, 'No match data found');
+                break;
+            }
+
+            $statistics = (new StatisticsCalculator())->calculateOverallStatistics($allMatches);
+
+            $jokersMap = [];
+            foreach (Db::getJokers() as $joker) {
+                if (!empty($joker['id'])) {
+                    $jokersMap[$joker['id']] = $joker;
+                }
+            }
+
+            $selectedPlayers = [];
+            foreach ($statistics['players'] as $player) {
+                $key = $player['playerId'] ?? ($player['name'] ?? '');
+                if (in_array($key, $playerIds, true)) {
+                    $selectedPlayers[] = $player;
+                }
+            }
+            foreach ($playerIds as $playerId) {
+                if (isset($jokersMap[$playerId])) {
+                    $selectedPlayers[] = jokerPlayerRow($jokersMap[$playerId]);
+                }
+            }
+
+            if (count($selectedPlayers) !== 10) {
+                fail(400, 'Could not find all selected players. Found: ' . count($selectedPlayers));
+                break;
+            }
+
+            // Two random captains (coin flip = who picks first), eight in the pool.
+            $draft = Draft::build($selectedPlayers);
+
+            $teamId = uniqid('team_', true);
+            Db::insertTeam($teamId, [
+                'id'           => $teamId,
+                'draft'        => $draft,
+                'createdAt'    => date('c'),
+                'playerNames'  => array_map(fn($p) => $p['name'] ?? '', $selectedPlayers),
+                'dateFilter'   => $dateFilter,
+                'matchesCount' => count($allMatches),
+            ]);
+
+            echo json_encode([
+                'success' => true,
+                'teamId'  => $teamId,
+                'draft'   => $draft,
+            ]);
+            break;
+        }
+
+        case 'draft-pick': {
+            $input     = json_decode(file_get_contents('php://input'), true) ?: [];
+            $teamId    = $input['teamId']    ?? $_POST['teamId']    ?? '';
+            $voterId   = $input['voterId']   ?? $_POST['voterId']   ?? '';
+            $playerKey = $input['playerKey'] ?? $_POST['playerKey'] ?? '';
+
+            if (empty($teamId) || empty($voterId) || $playerKey === '') {
+                fail(400, 'teamId, voterId and playerKey are required');
+                break;
+            }
+
+            try {
+                $result = Db::mutateTeam($teamId, fn (array $composition) =>
+                    Draft::applyPick($composition, (string) $voterId, (string) $playerKey));
+            } catch (InvalidArgumentException $e) {
+                fail(403, $e->getMessage());
+                break;
+            } catch (RuntimeException $e) {
+                fail(409, $e->getMessage());
+                break;
+            }
+
+            if ($result === null) {
+                fail(404, 'Team not found');
+                break;
+            }
+
+            echo json_encode([
+                'success' => true,
+                'team'    => $result,
+            ]);
+            break;
+        }
+
+        case 'cancel-draft': {
+            // Abort a stuck draft (e.g. an AFK captain): a captain or admin
+            // falls back to the auto-balancer over all 10 players.
+            $input   = json_decode(file_get_contents('php://input'), true) ?: [];
+            $teamId  = $input['teamId']  ?? $_POST['teamId']  ?? '';
+            $voterId = $input['voterId'] ?? $_POST['voterId'] ?? '';
+
+            if (empty($teamId) || empty($voterId)) {
+                fail(400, 'teamId and voterId are required');
+                break;
+            }
+
+            try {
+                $result = Db::mutateTeam($teamId, fn (array $composition) =>
+                    Draft::cancel($composition, (string) $voterId, MAP_VOTE_ADMIN_IDS));
+            } catch (InvalidArgumentException $e) {
+                fail(403, $e->getMessage());
+                break;
+            } catch (RuntimeException $e) {
+                fail(409, $e->getMessage());
+                break;
+            }
+
+            if ($result === null) {
+                fail(404, 'Team not found');
+                break;
+            }
+
+            echo json_encode([
+                'success' => true,
+                'team'    => $result,
             ]);
             break;
         }
