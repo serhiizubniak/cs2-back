@@ -26,3 +26,16 @@ CREATE TABLE IF NOT EXISTS teams (
     composition JSONB NOT NULL,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Receipt log for the Chrome extension (Scope Tap) ingest webhook. One row per
+-- received POST, whether it stored a match or failed. Lets us tell "the
+-- extension never knocked" apart from "it knocked but the request was rejected".
+CREATE TABLE IF NOT EXISTS ingest_log (
+    id          BIGSERIAL PRIMARY KEY,
+    match_id    TEXT,
+    status      TEXT NOT NULL,          -- ok | duplicate | invalid | unauthorized | error
+    error       TEXT,
+    received_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS ingest_log_received_at_idx ON ingest_log (received_at DESC);
