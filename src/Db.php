@@ -139,6 +139,57 @@ class Db {
         ];
     }
 
+    /**
+     * Idempotent, non-clobbering insert used by the Scope Tap ingest webhook.
+     * Inserts a new match, but leaves an existing row untouched — a match may
+     * already have been parsed by the scraper (which produces a richer
+     * match_data), and we don't want a leaner extension payload to overwrite
+     * it. Returns true when a row was actually inserted, false when the match
+     * already existed (both are a successful, dedup-safe outcome). Single
+     * statement, so concurrent retries can't race a SELECT/INSERT gap.
+     */
+    public static function upsertMatch(
+        string $id,
+        string $url,
+        ?string $map,
+        array $score,
+        array $matchData,
+        ?string $matchTime = null
+    ): bool {
+        $matchTime = $matchTime ?: self::extractMatchTime($matchData);
+
+        $stmt = self::pdo()->prepare(
+            'INSERT INTO matches (id, url, map, score, match_data, added_at, match_time)
+             VALUES (?, ?, ?, ?::jsonb, ?::jsonb, now(), ?::timestamptz)
+             ON CONFLICT (id) DO NOTHING
+             RETURNING id'
+        );
+        $stmt->execute([
+            $id,
+            $url,
+            $map,
+            json_encode($score, JSON_UNESCAPED_UNICODE),
+            json_encode($matchData, JSON_UNESCAPED_UNICODE),
+            $matchTime,
+        ]);
+
+        // RETURNING yields a row only when the INSERT actually happened;
+        // ON CONFLICT DO NOTHING returns no row for an already-present match.
+        return $stmt->fetchColumn() !== false;
+    }
+
+    /**
+     * Append one row to the ingest receipt log. Kept dependency-free and
+     * best-effort — the caller wraps this so a logging failure never masks the
+     * real request outcome.
+     */
+    public static function logIngest(?string $matchId, string $status, ?string $error = null): void {
+        $stmt = self::pdo()->prepare(
+            'INSERT INTO ingest_log (match_id, status, error) VALUES (?, ?, ?)'
+        );
+        $stmt->execute([$matchId, $status, $error]);
+    }
+
     public static function updateMatchFull(string $id, ?string $map, array $score, array $matchData): bool {
         $stmt = self::pdo()->prepare(
             'UPDATE matches
