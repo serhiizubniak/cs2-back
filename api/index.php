@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Headers: Content-Type, X-Scope-Tap-Secret');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -14,10 +14,23 @@ require_once __DIR__ . '/../src/MatchParser.php';
 require_once __DIR__ . '/../src/StatisticsCalculator.php';
 require_once __DIR__ . '/../src/TeamBalancer.php';
 require_once __DIR__ . '/../src/Draft.php';
+require_once __DIR__ . '/../src/ExtensionMatch.php';
 
 function fail(int $code, string $error, array $extra = []): void {
     http_response_code($code);
     echo json_encode(array_merge(['success' => false, 'error' => $error], $extra));
+}
+
+/**
+ * Write to the ingest receipt log without ever letting a logging failure mask
+ * the real request outcome — used by the Scope Tap ingest webhook.
+ */
+function logIngestSafe(?string $matchId, string $status, ?string $error = null): void {
+    try {
+        Db::logIngest($matchId, $status, $error);
+    } catch (Throwable $e) {
+        error_log('ingest-match: failed to write ingest_log: ' . $e->getMessage());
+    }
 }
 
 function jokerPlayerRow(array $joker): array {
@@ -463,6 +476,86 @@ try {
             echo json_encode([
                 'success' => true,
                 'match'   => $saved,
+            ]);
+            break;
+        }
+
+        case 'ingest-match': {
+            // Ingest webhook for the Chrome extension (Scope Tap). Accepts the
+            // scope.gg match the extension scraped, adapts it to the shape the
+            // scraper (MatchParser) produces, and stores it in the same
+            // `matches` table — so it flows into the existing stats/list code
+            // with no new read endpoints.
+
+            // Shared-secret auth. Constant-time compare (never ===) so a wrong
+            // secret cannot be probed by timing.
+            $secret   = getenv('SCOPE_TAP_SECRET');
+            $provided = $_SERVER['HTTP_X_SCOPE_TAP_SECRET'] ?? '';
+
+            if ($secret === false || $secret === '') {
+                error_log('ingest-match: SCOPE_TAP_SECRET is not configured');
+                fail(500, 'Ingest is not configured');
+                break;
+            }
+            if (!is_string($provided) || !hash_equals($secret, $provided)) {
+                logIngestSafe(null, 'unauthorized');
+                fail(401, 'Unauthorized');
+                break;
+            }
+
+            // Cap the body at 5 MB before decoding.
+            $rawBody = file_get_contents('php://input');
+            if ($rawBody === false) {
+                $rawBody = '';
+            }
+            if (strlen($rawBody) > 5 * 1024 * 1024) {
+                logIngestSafe(null, 'invalid', 'payload exceeds 5MB');
+                fail(413, 'Payload too large');
+                break;
+            }
+
+            $body = json_decode($rawBody, true);
+            if (!is_array($body)) {
+                logIngestSafe(null, 'invalid', 'malformed JSON');
+                fail(400, 'Invalid JSON body');
+                break;
+            }
+
+            try {
+                ExtensionMatch::validate($body);
+            } catch (InvalidArgumentException $e) {
+                $rejectedId = is_string($body['matchId'] ?? null) ? $body['matchId'] : null;
+                logIngestSafe($rejectedId, 'invalid', $e->getMessage());
+                fail(400, $e->getMessage());
+                break;
+            }
+
+            $match   = ExtensionMatch::toMatchData($body);
+            $matchId = $match['id'];
+
+            try {
+                $inserted = Db::upsertMatch(
+                    $matchId,
+                    $match['url'],
+                    $match['map'],
+                    $match['score'],
+                    $match['matchData'],
+                    $match['matchTime']
+                );
+            } catch (Throwable $e) {
+                logIngestSafe($matchId, 'error', $e->getMessage());
+                throw $e; // global handler below maps this to a 500
+            }
+
+            // inserted=false means the match was already present; we leave the
+            // existing (possibly richer, scraper-parsed) row untouched. Both
+            // outcomes are a successful, dedup-safe receipt.
+            logIngestSafe($matchId, $inserted ? 'ok' : 'duplicate');
+
+            echo json_encode([
+                'success'  => true,
+                'matchId'  => $matchId,
+                'inserted' => $inserted,
             ]);
             break;
         }
