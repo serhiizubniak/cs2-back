@@ -79,6 +79,11 @@ check(!throwsInvalid(fn() => Highlight::validate([
     'matchId' => '1', 'playerId' => '2', 'round' => 0, 'kind' => '1v2', 'objectKey' => '1/2_r00_1v2.mp4',
 ])), 'optional fields may be omitted');
 
+foreach (['3k', '5k', '1v2', 'collateral', 'utility-kill', 'jumpshot', 'pistol-headshot'] as $kind) {
+    check(!throwsInvalid(fn() => Highlight::validate(samplePayload(['kind' => $kind]))), "kind \"$kind\" is accepted");
+}
+check(throwsInvalid(fn() => Highlight::validate(samplePayload(['kind' => 'utility kill']))), 'a kind with spaces is rejected');
+
 foreach (['matchId', 'playerId', 'round', 'kind', 'objectKey'] as $field) {
     check(throwsInvalid(fn() => Highlight::validate(without(samplePayload(), $field))), "missing $field is rejected");
 }
@@ -99,6 +104,7 @@ echo "\nRecord (Highlight::toRecord)\n";
 $record = Highlight::toRecord(samplePayload(['playerId' => 192104407, 'kind' => '3K', 'tags' => null, 'playerName' => '  ']));
 check($record['playerId'] === '192104407', 'integer playerId becomes a string');
 check($record['kind'] === '3k', 'kind is lower-cased');
+check(Highlight::toRecord(samplePayload(['kind' => 'Pistol-Headshot']))['kind'] === 'pistol-headshot', 'hyphenated kinds are kept, lower-cased');
 check($record['tags'] === [], 'missing tags become an empty array');
 check($record['playerName'] === null, 'a blank player name becomes null');
 check($record['steamId64'] === '76561198152370135', 'steamId64 is kept verbatim');

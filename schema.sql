@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS highlights (
     steam_id64        TEXT,
     player_name       TEXT,
     round             INT NOT NULL,
-    kind              TEXT NOT NULL,          -- 3k | 4k | 5k | 1v2 | 1v3 | ...
+    kind              TEXT NOT NULL,          -- 3k..5k | 1v2..1v5 | collateral | utility-kill | jumpshot | pistol-headshot | ...
     score             NUMERIC(10,2),
     tags              JSONB NOT NULL DEFAULT '[]'::jsonb,
     start_tick        INT,
