@@ -10,6 +10,9 @@
  *   DATABASE_URL=... php scripts/fix-added-at.php /path/to/backup-YYYY-MM-DD
  */
 
+require_once __DIR__ . '/../src/Env.php';
+Env::load(__DIR__ . '/../.env');
+
 require_once __DIR__ . '/../src/Db.php';
 
 if ($argc < 2) {

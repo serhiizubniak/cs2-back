@@ -11,6 +11,9 @@
  * in the style of scripts/*.
  */
 
+require_once __DIR__ . '/../src/Env.php';
+Env::load(__DIR__ . '/../.env');
+
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/ExtensionMatch.php';
 
