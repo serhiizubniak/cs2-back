@@ -13,6 +13,9 @@
  * Idempotent: skips rows that already exist. Safe to re-run.
  */
 
+require_once __DIR__ . '/../src/Env.php';
+Env::load(__DIR__ . '/../.env');
+
 require_once __DIR__ . '/../src/Db.php';
 
 if ($argc < 2) {

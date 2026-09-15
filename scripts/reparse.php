@@ -11,6 +11,9 @@
  * (e.g. scope.gg deleted the match) so one bad apple doesn't stop the loop.
  */
 
+require_once __DIR__ . '/../src/Env.php';
+Env::load(__DIR__ . '/../.env');
+
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/MatchParser.php';
 

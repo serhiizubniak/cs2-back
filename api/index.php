@@ -2,12 +2,15 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, X-Scope-Tap-Secret');
+header('Access-Control-Allow-Headers: Content-Type, X-Scope-Tap-Secret, X-Highlights-Cleanup-Token');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
+
+require_once __DIR__ . '/../src/Env.php';
+Env::load(__DIR__ . '/../.env');
 
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/MatchParser.php';
@@ -15,6 +18,8 @@ require_once __DIR__ . '/../src/StatisticsCalculator.php';
 require_once __DIR__ . '/../src/TeamBalancer.php';
 require_once __DIR__ . '/../src/Draft.php';
 require_once __DIR__ . '/../src/ExtensionMatch.php';
+require_once __DIR__ . '/../src/Highlight.php';
+require_once __DIR__ . '/../src/R2Client.php';
 
 function fail(int $code, string $error, array $extra = []): void {
     http_response_code($code);
@@ -264,6 +269,55 @@ function decideMapVote(array $composition): array {
         'scores'     => $rows,
         'randomPool' => $weighted,
     ];
+}
+
+/**
+ * Constant-time check of a shared-secret request header against an env
+ * variable. Returns null when it matches, otherwise the [status, error] to fail
+ * with: 500 when the secret is not configured (so a missing env var never reads
+ * as "everyone is unauthorized"), 401 for a wrong or missing header.
+ */
+function sharedSecretFailure(string $envVar, string $serverKey): ?array {
+    $secret   = getenv($envVar);
+    $provided = $_SERVER[$serverKey] ?? '';
+
+    if ($secret === false || $secret === '') {
+        error_log("$envVar is not configured");
+        return [500, 'Not configured'];
+    }
+    if (!is_string($provided) || !hash_equals($secret, $provided)) {
+        return [401, 'Unauthorized'];
+    }
+    return null;
+}
+
+/** Map-vote admins may also remove anyone's favourite highlight. */
+function isHighlightAdmin(string $voterId): bool {
+    return in_array($voterId, MAP_VOTE_ADMIN_IDS, true) || in_array($voterId, MAP_VOTE_ADMIN_NAMES, true);
+}
+
+/**
+ * API shape of a stored highlight: adds the playable URL, built from
+ * R2_PUBLIC_BASE_URL on every read so moving to another domain needs no data
+ * migration. The object key stays internal.
+ */
+function presentHighlight(array $highlight): array {
+    $key = $highlight['objectKey'];
+    unset($highlight['objectKey']);
+
+    $highlight['videoUrl'] = R2Client::publicUrl(getenv('R2_PUBLIC_BASE_URL') ?: null, $key);
+
+    return $highlight;
+}
+
+/**
+ * R2_STORAGE_LIMIT_GB in bytes — decimal GB, the way Cloudflare bills. Defaults
+ * to 10, the free tier; 0 means no cap (null).
+ */
+function storageLimitBytes(): ?int {
+    $raw = getenv('R2_STORAGE_LIMIT_GB');
+    $gb  = ($raw === false || $raw === '') ? 10.0 : (float) $raw;
+    return $gb > 0 ? (int) round($gb * 1000 * 1000 * 1000) : null;
 }
 
 function normalizeDate($value): ?string {
@@ -1060,6 +1114,196 @@ try {
                 break;
             }
             echo json_encode(['success' => true]);
+            break;
+        }
+
+        case 'publish-highlight': {
+            // Metadata webhook for the cs-highlights recorder. The recorder has
+            // already uploaded the clip to R2 itself; this only records where
+            // it is. Upserts on (matchId, playerId, round), so re-runs are safe.
+            $failure = sharedSecretFailure('HIGHLIGHTS_API_TOKEN', 'HTTP_X_HIGHLIGHTS_TOKEN');
+            if ($failure !== null) {
+                fail(...$failure);
+                break;
+            }
+
+            $rawBody = file_get_contents('php://input');
+            if ($rawBody === false) {
+                $rawBody = '';
+            }
+            if (strlen($rawBody) > 64 * 1024) {
+                fail(413, 'Payload too large');
+                break;
+            }
+
+            $body = json_decode($rawBody, true);
+            if (!is_array($body)) {
+                fail(400, 'Invalid JSON body');
+                break;
+            }
+
+            try {
+                Highlight::validate($body);
+            } catch (InvalidArgumentException $e) {
+                fail(400, $e->getMessage());
+                break;
+            }
+
+            $result = Db::upsertHighlight(Highlight::toRecord($body));
+
+            echo json_encode([
+                'success'   => true,
+                'inserted'  => $result['inserted'],
+                'highlight' => presentHighlight($result['highlight']),
+            ]);
+            break;
+        }
+
+        case 'get-highlights': {
+            $matchId  = is_string($_GET['matchId']  ?? null) ? trim($_GET['matchId'])  : '';
+            $playerId = is_string($_GET['playerId'] ?? null) ? trim($_GET['playerId']) : '';
+
+            if (($matchId === '') === ($playerId === '')) {
+                fail(400, 'Exactly one of matchId or playerId is required');
+                break;
+            }
+
+            $rows = $matchId !== ''
+                ? Db::getHighlightsByMatch($matchId)
+                : Db::getHighlightsByPlayer($playerId);
+
+            echo json_encode([
+                'success'    => true,
+                'highlights' => array_map('presentHighlight', $rows),
+                // The player page has no other source for the header; a match
+                // page already has the roster.
+                'player'     => $playerId !== '' ? Db::findPlayerProfile($playerId) : null,
+            ]);
+            break;
+        }
+
+        case 'favorite-highlight':
+        case 'unfavorite-highlight': {
+            // Trust-based like the map vote: voterId is the nickname claim
+            // stored in the visitor's browser. Anyone who has claimed a nick may
+            // favourite; only whoever favourited, or an admin, may unfavourite.
+            $input       = json_decode(file_get_contents('php://input'), true) ?: [];
+            $highlightId = $input['highlightId'] ?? null;
+            $voterId     = is_string($input['voterId'] ?? null) ? trim($input['voterId']) : '';
+
+            if (!is_int($highlightId) && !(is_string($highlightId) && preg_match('/^\d+$/', $highlightId))) {
+                fail(400, 'highlightId is required');
+                break;
+            }
+            if ($voterId === '') {
+                fail(400, 'voterId is required');
+                break;
+            }
+            $highlightId = (int) $highlightId;
+
+            if ($action === 'favorite-highlight') {
+                $voterName = is_string($input['voterName'] ?? null) ? trim($input['voterName']) : '';
+                $result    = Db::favoriteHighlight($highlightId, $voterId, $voterName !== '' ? $voterName : $voterId);
+            } else {
+                try {
+                    $result = Db::unfavoriteHighlight($highlightId, $voterId, isHighlightAdmin($voterId));
+                } catch (InvalidArgumentException $e) {
+                    fail(403, $e->getMessage());
+                    break;
+                }
+            }
+
+            if ($result === null) {
+                fail(404, 'Highlight not found');
+                break;
+            }
+
+            echo json_encode([
+                'success'   => true,
+                'highlight' => presentHighlight($result),
+            ]);
+            break;
+        }
+
+        case 'get-storage-usage': {
+            // Read-only bucket report for the Admin tab: how close R2 is to the
+            // free tier and how much a cleanup would free right now. It lists
+            // the whole bucket (a Class A operation), so the page fetches it on
+            // demand instead of polling.
+            $r2 = R2Client::fromEnv();
+            if ($r2 === null) {
+                echo json_encode(['success' => true, 'configured' => false]);
+                break;
+            }
+
+            $keys = Db::highlightObjectKeys();
+
+            echo json_encode(array_merge(
+                ['success' => true, 'configured' => true],
+                Highlight::storageUsage($r2->listObjects(), $keys['favorite'], $keys['clip'], storageLimitBytes()),
+                [
+                    'highlightCount' => count($keys['favorite']) + count($keys['clip']),
+                    'favoriteCount'  => count($keys['favorite']),
+                    'checkedAt'      => gmdate('c'),
+                ]
+            ));
+            break;
+        }
+
+        case 'cleanup-highlights': {
+            // Manual cleanup from the Admin tab: deletes every clip nobody
+            // favourited. Rows go first, then every object no remaining row
+            // points at — which also sweeps orphans, clips whose publish never
+            // arrived. Anything newer than the run's start is left alone, so a
+            // recorder publishing during the cleanup keeps its clip. If the R2
+            // step fails after rows are gone, the leftover objects are orphans
+            // and the next run removes them. Guarded by a token the admin pastes
+            // into the Admin tab once.
+            $failure = sharedSecretFailure('HIGHLIGHTS_CLEANUP_TOKEN', 'HTTP_X_HIGHLIGHTS_CLEANUP_TOKEN');
+            if ($failure !== null) {
+                fail(...$failure);
+                break;
+            }
+
+            $r2 = R2Client::fromEnv();
+            if ($r2 === null) {
+                fail(500, 'R2 is not configured');
+                break;
+            }
+
+            $input  = json_decode(file_get_contents('php://input'), true) ?: [];
+            $dryRun = ($input['dryRun'] ?? false) === true || ($_GET['dryRun'] ?? '') === '1';
+
+            set_time_limit(300);
+            $cutoff   = gmdate('c');
+            $cutoffTs = strtotime($cutoff);
+
+            $deletedRows = $dryRun ? Db::countStaleHighlights($cutoff) : Db::deleteStaleHighlights($cutoff);
+            $keep        = array_flip(Db::keptHighlightKeys($cutoff));
+
+            $toDelete = [];
+            $kept     = 0;
+            foreach ($r2->listObjects() as $object) {
+                $modified = strtotime($object['lastModified']);
+                if (isset($keep[$object['key']]) || ($modified !== false && $modified >= $cutoffTs)) {
+                    $kept++;
+                    continue;
+                }
+                $toDelete[] = $object['key'];
+            }
+
+            $failed = $dryRun ? [] : $r2->deleteObjects($toDelete);
+
+            echo json_encode([
+                'success'        => true,
+                'dryRun'         => $dryRun,
+                'cutoff'         => $cutoff,
+                'deletedRows'    => $deletedRows,
+                'deletedObjects' => count($toDelete) - count($failed),
+                'keptObjects'    => $kept,
+                'failedObjects'  => $failed ?: new stdClass(),
+                'sampleKeys'     => array_slice($toDelete, 0, 20),
+            ]);
             break;
         }
 

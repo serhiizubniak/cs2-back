@@ -1,6 +1,12 @@
 RewriteEngine On
 RewriteBase /
 
+# Never serve env files. The local docker-compose mounts this directory as the
+# document root, so without this a .env would be downloadable at /.env.
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>
+
 # Route API requests to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -10,5 +16,5 @@ RewriteRule ^api/(.*)$ api/index.php [QSA,L]
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "*"
     Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-    Header set Access-Control-Allow-Headers "Content-Type, X-Scope-Tap-Secret"
+    Header set Access-Control-Allow-Headers "Content-Type, X-Scope-Tap-Secret, X-Highlights-Cleanup-Token"
 </IfModule>
