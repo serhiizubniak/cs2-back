@@ -1159,6 +1159,34 @@ try {
             break;
         }
 
+        case 'get-highlight': {
+            // One clip by id — backs the shareable /clip/<id> page. Besides the
+            // clip it returns the player's profile (avatar) and a match summary
+            // so that page, and its link preview, can render without a second
+            // round trip.
+            $id = $_GET['id'] ?? '';
+            if (!is_string($id) || !preg_match('/^\d{1,18}$/', $id)) {
+                fail(400, 'id is required');
+                break;
+            }
+
+            $highlight = Db::getHighlight((int) $id);
+            if ($highlight === null) {
+                // Most likely a clip nobody favourited that Cleanup has since
+                // removed — the page explains exactly that on 404.
+                fail(404, 'Highlight not found');
+                break;
+            }
+
+            echo json_encode([
+                'success'   => true,
+                'highlight' => presentHighlight($highlight),
+                'player'    => Db::findPlayerProfile($highlight['playerId']),
+                'match'     => Db::getMatchSummary($highlight['matchId'], $highlight['playerId']),
+            ]);
+            break;
+        }
+
         case 'get-highlights': {
             $matchId  = is_string($_GET['matchId']  ?? null) ? trim($_GET['matchId'])  : '';
             $playerId = is_string($_GET['playerId'] ?? null) ? trim($_GET['playerId']) : '';

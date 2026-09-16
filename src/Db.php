@@ -476,6 +476,54 @@ class Db {
     }
 
     /**
+     * The little a standalone clip page needs to know about its match: the
+     * map, when it was played, the final score, and which team the clip's
+     * player was on (so the page can say "won 13:7" from their point of view).
+     * Null when the match is not stored — cleared, or the clip was published
+     * before the match was ingested.
+     *
+     * @return array{matchId: string, map: ?string, matchTime: ?string,
+     *               score: ?array{team1: int, team2: int}, playerTeam: ?int}|null
+     */
+    public static function getMatchSummary(string $matchId, string $playerId): ?array {
+        $stmt = self::pdo()->prepare(
+            "SELECT m.id, m.map, m.score, COALESCE(m.match_time, m.added_at) AS match_time,
+                    m.match_data->'teams' AS teams
+             FROM matches m
+             WHERE m.id = ?"
+        );
+        $stmt->execute([$matchId]);
+        $row = $stmt->fetch();
+        if (!$row) {
+            return null;
+        }
+
+        $score = json_decode((string) $row['score'], true);
+        $hasScore = is_array($score) && is_numeric($score['team1'] ?? null) && is_numeric($score['team2'] ?? null);
+
+        // Team membership is resolved in PHP: match_data is scraped JSON and a
+        // stray non-numeric teamNumber must not turn into a SQL cast error.
+        $playerTeam = null;
+        $teams = json_decode((string) ($row['teams'] ?? ''), true);
+        foreach (is_array($teams) ? $teams : [] as $team) {
+            foreach (is_array($team['players'] ?? null) ? $team['players'] : [] as $player) {
+                if ((string) ($player['playerId'] ?? '') === $playerId && is_numeric($team['teamNumber'] ?? null)) {
+                    $playerTeam = (int) $team['teamNumber'];
+                    break 2;
+                }
+            }
+        }
+
+        return [
+            'matchId'    => (string) $row['id'],
+            'map'        => $row['map'] !== null && $row['map'] !== '' ? $row['map'] : null,
+            'matchTime'  => $row['match_time'] ? self::toIso8601($row['match_time']) : null,
+            'score'      => $hasScore ? ['team1' => (int) $score['team1'], 'team2' => (int) $score['team2']] : null,
+            'playerTeam' => $playerTeam,
+        ];
+    }
+
+    /**
      * Mark a clip as favourite. Idempotent: an existing favourite keeps whoever
      * favourited it first. Returns the highlight, or null for an unknown id.
      */

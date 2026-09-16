@@ -223,6 +223,28 @@ if ($dbReady) {
         check(Db::favoriteHighlight(PHP_INT_MAX, 'voter-a', 'Voter A') === null, 'favouriting an unknown id returns null');
         check(Db::unfavoriteHighlight(PHP_INT_MAX, 'voter-a', false) === null, 'unfavouriting an unknown id returns null');
 
+        check(Db::getHighlight($id)['id'] === $id && Db::getHighlight($id)['kind'] === '4k', 'a single clip reads back by id (share page)');
+        check(Db::getHighlight(PHP_INT_MAX) === null, 'an unknown clip id reads back as null');
+        check(Db::getMatchSummary($matchId, '192104407') === null, 'a clip whose match is not stored has no match summary');
+
+        $storedMatch = Db::pdo()->query(
+            "SELECT m.id, p->>'playerId' AS player_id, t->>'teamNumber' AS team
+             FROM matches m,
+                  jsonb_array_elements(m.match_data->'teams') t, jsonb_array_elements(t->'players') p
+             WHERE jsonb_typeof(m.match_data->'teams') = 'array' AND p->>'playerId' <> '' LIMIT 1"
+        )->fetch();
+        if ($storedMatch) {
+            $summary = Db::getMatchSummary($storedMatch['id'], $storedMatch['player_id']);
+            check($summary !== null && $summary['matchId'] === $storedMatch['id'], 'a stored match has a summary');
+            check(
+                $summary['score'] === null || (is_int($summary['score']['team1']) && is_int($summary['score']['team2'])),
+                'the summary score is a pair of ints when present'
+            );
+            check($summary['playerTeam'] === (int) $storedMatch['team'], 'the summary knows which team the player was on');
+            $other = Db::getMatchSummary($storedMatch['id'], 'not-in-this-match');
+            check($other !== null && $other['playerTeam'] === null, 'a player outside the roster has no team in the summary');
+        }
+
         check(Db::findPlayerProfile('0000000000') === null, 'an unknown player has no profile');
         $anyPlayer = Db::pdo()->query(
             "SELECT p->>'playerId' FROM matches m,
